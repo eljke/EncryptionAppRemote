@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <profiles>
+        <!-- Профиль по умолчанию -->
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Настройки для профиля по умолчанию -->
+            </properties>
+        </profile>
+
+        <!-- Профиль для отключения ненужных настроек -->
+        <profile>
+            <id>disable-unwanted-settings</id>
+            <properties>
+                <unwanted.property>off</unwanted.property>
+                <!-- Другие настройки, которые нужно отключить -->
+            </properties>
+        </profile>
+    </profiles>
+</settings>

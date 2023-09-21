@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My account</title>
+</head>
+<body>
+<h2>
+    <span id="greeting"></span><span th:text="${user.getName() != null ? ', ' + user.getName() + '!' : '!'}"></span>
+</h2>
+<script th:src="@{/js/greeting.js}"></script>
+</body>
+</html>
