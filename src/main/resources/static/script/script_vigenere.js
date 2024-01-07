@@ -9,9 +9,9 @@ function changeOpacity(element) {
             if (index === 0) {
                 imageContainer.innerHTML = '<img src="../images/vyzhener_table.png" alt="Image">';
             } else if (index === 1) {
-                imageContainer.innerHTML = '<video loop muted controls style="width: 100%; height: auto;" autoplay="autoplay"><source src="../videos/Key_norm.mp4" type="video/mp4"></video>';
+                imageContainer.innerHTML = '<iframe src="https://vk.com/video_ext.php?oid=-224157165&id=456239019&hash=cc33ba7ac61f7cbc&autoplay=1" width="748" height="748" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>';
             } else if (index === 2) {
-                imageContainer.innerHTML = '<video loop muted controls style="width: 100%; height: auto;" autoplay="autoplay"><source src="../videos/Vuzhiner.mp4" type="video/mp4"></video>';
+                imageContainer.innerHTML = '<iframe src="https://vk.com/video_ext.php?oid=-224157165&id=456239017&hash=54f8dbabe7302001&autoplay=1" width="748" height="748" frameborder="0" allowfullscreen="allowfullscreen" allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>';
             }
         } else {
             paragraph.style.opacity = 0.4;

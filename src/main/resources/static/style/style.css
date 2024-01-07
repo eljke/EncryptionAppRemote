@@ -72,7 +72,7 @@
 
 .button {
     height: 10vh;
-    width: 16vw;
+    width: 12vw;
     padding: 1vh 2vw;
     border-radius: 20vh;
     border: 3px solid #383838;
@@ -108,6 +108,14 @@
 
 #vyzhiner-butt {
     background-color: #987ce8;
+}
+
+#encode-butt {
+    background-color: #b8e77b;
+}
+
+#decode-butt {
+    background-color: #e7b57b;
 }
 
 .not_header {
