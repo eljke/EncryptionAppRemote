@@ -53,7 +53,7 @@ public class AccountController {
         return "account";
     }
 
-    private String getCombinedUsername(Authentication auth) {
+    public static String getCombinedUsername(Authentication auth) {
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) auth.getPrincipal();
         if (oAuth2User.getAttribute("first_name") != null
                 && oAuth2User.getAttribute("last_name") != null

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Взлом шифра Цезаря</title>
+    <link rel="stylesheet" href="../style/styles3.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=PT Mono' rel='stylesheet'>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Главная страница</a></li>
+            <li><a href="Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="permutation.html">Шифры перестановки</a></li>
+            <li><a href="polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="vigenere.html">Шифр Виженера</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="content">
+    <h1><span style="color: #FF7777">Взлом</span> шифра Цезаря</h1>
+    <div class="block-container">
+        <div style="width: 6vw; margin-right: 32px; align-self: flex-start;" class="container">
+            <div class="button-box">
+                <a style="text-decoration: none" href="Caesar.html">
+                    <p style="margin: 0; text-align: center; color: white">Назад</p>
+                </a>
+            </div>
+        </div>
+        <div class="text-container">
+            <div class="container">
+                <div class="text-box">
+                    <p style="margin: 0">Первый метод - <span class="pink">перебор ключей</span>. Метод заключается в простом перебирании всех сдвигов, т.е. ключей. Так как их достаточно малое количество, дешифровать сообщение достаточно просто.</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="text-box">
+                    <h4 style="margin-top: 0; margin-bottom: 1vh"><span class="pink">Ой!</span> Кажется <span class="green">Ваш текст</span> где-то среди этих <span class="green">33 вариантов</span>...</h4>
+                    <p style="margin: 0" class="gray" id="cipherText">УЧЖЗ цйвшья ц евжбт язлмьй збьцщдеьжщжвц Двееьь гв цщдеьь ъздбфяф Forbes, ыфбьафу 46 ащежв (2021, 2022 чч). 100% ьбвчвдвшбьй ежзшщбжвц ц УЧЖЗ вхщегщлщбп вхнщъьжьуаь. Ц цзыщ ьшщж гдьща бф гвлжь 900 хтшъщжбпй ащеж, ф вхньэ бфхвд евежфцяущж хвярмщ 1600 ежзшщбжвц. Гвлжь 90% цпгзеюбьювц УЧЖЗ зегщмбв ждзшвзеждфьцфтжеу. Абвчьщ бфйвшуж дфхвжз зъщ цв цдщау злщхп. Ежзшщблщеюьэ чвдвшвю УЧЖЗ цюятлфщж 9 злщхбпй ювдгзевц, 4 вхнщъьжьу, егвджьцбпэ ювдгзе, ежвявцзт, ежфшьвб, фцжвшдва. Цещ дфегвявъщбв ювагфюжбв, ц вшбва ащежщ! Шяу еьярбпй фхьжздьщбжвц шщэежцзщж гдвчдфааф "Гвшшщдъюф язлмьй", гдщшзеафждьцфтнфу цпгяфжз гвцпмщббпй ежьгщбшьэ ь еюьшюь бф гяфжбвщ вхзлщбьщ.</p>
+                    <div class="upr">
+                        <button class="button-upr" onclick="changeTextPlus()">+</button>
+                        <span id="numberDisplay">0</span>
+                        <button class="button-upr" onclick="decrypt()">-</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="text-box">
+                    <p style="margin: 0">Второй метод - <span class="cyan">частотный анализ</span>. Частотный анализ предполагает, что каждая <span class="green">буква алфавита</span> того или иного языка в довольно длинном тексте <span class="green">встречается с определенной частотой</span>, к примеру, для русского языка известно, что буквы <span class="green">«О», «П», «Р»</span> встречаются <span class="green">очень часто</span>, а вот <span class="green">«Й», «Ъ»</span> — <span class="green">редко</span>.</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="text-box">
+                    <input type="text" id="inputText" class="input-field" value="Редактируй этот текст, чтобы увидеть как поменяется график. График показывает как часто встречается каждая буква алфавита в заданном тексте.">
+                    <canvas id="myChart" style="max-height: 400px; margin-top: 3vh; margin-bottom: 3vh"></canvas>
+                    <p style="margin: 0">Если твой <span class="green">текст достаточно большой</span>, то его можно будет легко дешифровать, посмотрев на <span class="green">самые часто встречающиеся буквы</span>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../script/script_decaesor.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шифр Цезаря</title>
+    <link rel="stylesheet" href="../style/styles2.css">
+    <script src="../script/script_caesor.js"></script>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Главная страница</a></li>
+            <li><a href="Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="permutation.html">Шифры перестановки</a></li>
+            <li><a href="polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="vigenere.html">Шифр Виженера</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="content">
+    <h1>Шифр Цезаря</h1>
+    <div class="block-container">
+        <div class="text-container">
+            <div class="container">
+                <div class="text-box">
+                    <p style="margin: 1%"><span class="green">Шифр Цезаря</span> — это вид шифра <span class="green">подстановки</span>, в котором <span class="green">каждый символ</span> в тексте заменяется <span class="green">символом</span>, находящимся на постоянное число позиций <span class="green">вперед в алфавите</span>.</p>
+                    <p style="margin: 1%">По распространённой теории этот шифр был придуман <span class="green">Юлием Цезарем</span> около <span class="green">100 года до нашей эры</span>.</p>
+                    <p style="margin: 1%">Различные вариации данного шифра используются <span class="green">до сих пор</span>, но в классическом варианте данный шифр используется <span class="green">редко</span> из-за <span class="green">простоты дешифрования</span>.</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="text-box">
+                    <h4 style="margin-top: 0; margin-bottom: 1vh">Введите текст</h4>
+                    <input type="text" id="inputText" class="input-field" placeholder="Введите ваш текст">
+                    <h4 style="margin-top: 2vh; margin-bottom: 1vh">Сдвиг</h4>
+                    <input type="number" id="shiftValue" value="1" class="input-field" placeholder="Введите сдвиг">
+                    <h4 style="margin-top: 2vh; margin-bottom: 1vh">Результат</h4>
+                    <textarea id="outputText" class="input-field" readonly style="resize: none"></textarea>
+                </div>
+            </div>
+            <div class="container">
+                <div class="text-box">
+                    <p style="margin: 0; padding-bottom: 2%" class="cyan">А как дешифровать?</p>
+                    <p style="margin: 0"><span class="pink">Дешифрование</span> сообщения, зашифрованного <span class="green">шифром Цезаря</span> проводят, зачастую, разными способами, два из которых, <span class="pink">подбор ключа</span> и <span class="pink">частотный анализ</span>, описаны на отдельной странице:</p>
+                    <a href="deCaesar.html"><button class="debutton">Взлом</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <video autoplay loop muted controls style="width: 100%; height: auto;">
+                <source src="../videos/Caesar.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
+<script src="../script/script_caesor.js"></script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="text/html, charset=UTF-8, width=device-width, initial-scale=1"/>
+    <title>Расшифровать</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        .menu {
+            margin-top: 20px;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .menu a {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body onload="init()">
+<div class="container">
+    <nav class="menu navbar navbar-expand-lg navbar-light bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" th:href="@{/home}">
+                <i class="fas fa-home"></i> Главная</a>
+            </li>
+        </ul>
+        <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}">
+                    <i class="fas fa-sign-in-alt"></i> Вход
+                </a>
+            </li>
+        </ul>
+        <ul th:if="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/account}">
+                    <i class="fas fa-user"></i> Профиль
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">
+                    <i class="fas fa-sign-out-alt"></i> Выход
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="container mt-5" style="width: 50%">
+    <h2>Расшифровать значение</h2>
+    <form id="form" method="post" th:object="${request}" action="/api/encryption/decode">
+        <label for="algorithm">Алгоритм</label>
+        <select id="algorithm" name="algorithm" class="form-control"
+                onchange="selectedAlgorithm = this.value; showAlgorithmParams(selectedAlgorithm)"
+                th:with="caesarText='Шифр Цезаря',
+                hypotenuseText='Метод гипотенузы',
+                bcryptText='Bcrypt хэш-функция',
+                vigenereText='Шифр Виженера',
+                substitutionText='Шифр подстановки',
+                tabularRouteShuffleText='Шифр табличной маршрутной перестановки',
+                polybiusSquareText='Квадрат Полибия'">
+            <option disabled selected>Выберите алгоритм</option>
+            <option th:each="algorithmType : ${algorithmTypes}"
+                    th:value="${algorithmType}"
+                    th:text="${algorithmType == algorithmType.CAESAR ? caesarText :
+                        (algorithmType == algorithmType.HYPOTENUSE ? hypotenuseText :
+                        (algorithmType == algorithmType.BCRYPT ? bcryptText :
+                        (algorithmType == algorithmType.VIGENERE ? vigenereText :
+                        (algorithmType == algorithmType.SUBSTITUTION ? substitutionText :
+                        (algorithmType == algorithmType.TABULAR_ROUTE_SHUFFLE ? tabularRouteShuffleText :
+                        (algorithmType == algorithmType.POLYBIUS_SQUARE ? polybiusSquareText : algorithmType))))))}">
+            </option>
+        </select>
+        <div id="paramsTitle">Параметры</div>
+        <div id="caesar">
+            <label for="caesarParam1">Смещение</label>
+            <input id="caesarParam1" name="params" type="number" class="form-control">
+        </div>
+        <div id="hypotenuse">
+            <label for="hypotenuseParam1">Катет 1</label>
+            <input id="hypotenuseParam1" name="params" type="number" class="form-control">
+            <label for="hypotenuseParam2">Катет 2</label>
+            <input id="hypotenuseParam2" name="params" type="number" class="form-control">
+            <label for="hypotenuseParam3">Количество раундов</label>
+            <input id="hypotenuseParam3" name="params" type="number" class="form-control">
+            <label for="hypotenuseParam4">Алфавит</label>
+            <select id="hypotenuseParam4" name="params" class="form-control">
+                <option value="RU">Русский</option>
+                <option value="EN">Английский</option>
+            </select>
+        </div>
+        <div id="bcrypt">
+            <label for="bcryptParam1">Сложность</label>
+            <input id="bcryptParam1" name="params" type="number" class="form-control"
+                   placeholder="Должна быть равна -1 или 4 и больше">
+        </div>
+        <div id="vigenere">
+            <label for="vigenereKey">Ключ</label>
+            <input id="vigenereKey" name="params" type="text" class="form-control">
+        </div>
+        <div id="substitution">
+            <label for="substitutionKey">Символ</label>
+            <input id="substitutionKey" type="text" maxlength="1" class="form-control">
+            <label for="substitutionValue">Заменить на</label>
+            <input id="substitutionValue" type="text" maxlength="1" class="form-control">
+            <button id="addSubstitution">+</button>
+        </div>
+        <table id="substitutionTable">
+            <thead>
+            <tr>
+                <th>Ключ</th>
+                <th>Значение</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Здесь будут отображаться добавленные подстановки -->
+            </tbody>
+        </table>
+        <div id="tabularRouteShuffle">
+            <label for="tabularRouteShuffleParam1">Количество строк</label>
+            <input id="tabularRouteShuffleParam1" type="number" class="form-control">
+            <label for="tabularRouteShuffleParam2">Количество столбцов</label>
+            <input id="tabularRouteShuffleParam2" type="number" class="form-control">
+            <label for="tabularRouteShuffleParam3">Маршрут выписывания</label>
+            <select id="tabularRouteShuffleParam3" class="form-control">
+                <option disabled selected>Выберите маршрут</option>
+                <option value="UL">Сверху-вниз, слева-направо</option>
+                <option value="DR">Снизу-вверх, справа-налево</option>
+                <option value="RD">Справа-налево, снизу-вверх</option>
+            </select>
+        </div>
+        <div id="polybiusSquare">
+            <label for="polybiusSquareParam1">Алфавит</label>
+            <select id="polybiusSquareParam1">
+                <option value="RU">Русский</option>
+                <option value="EN">Английский</option>
+            </select>
+        </div>
+        <label for="value">Значение</label>
+        <input id="value" name="value" type="text" class="form-control" required>
+        <button type="submit" class="btn btn-outline-light btn-lg px-4 gap-3"
+                style="background-color: #696969">
+            Расшифровать
+        </button>
+    </form>
+    <br>
+    <label id="responseHeader" for="response"
+           style="display: none; font-size: 24px; font-weight: bold; margin-bottom: 10px">
+        Расшифрованное значение:
+    </label>
+    <input type="text" id="response" class="form-control" readonly
+           style="display: none">
+</div>
+<script>
+    function init() {
+        const selectedAlgorithm = '';
+        showAlgorithmParams(selectedAlgorithm);
+    }
+
+    function showAlgorithmParams(selectedAlgorithm) {
+        const params = document.getElementById('paramsTitle')
+        if (selectedAlgorithm !== '') {
+            params.style.display = 'flex'
+        } else {
+            params.style.display = 'none'
+        }
+
+        const caesarParams = document.getElementById('caesar')
+        const caesarParam1 = document.getElementById('caesarParam1')
+        if (selectedAlgorithm === 'CAESAR') {
+            caesarParam1.required = true
+            caesarParams.style.display = 'flex'
+        } else {
+            caesarParam1.required = false
+            caesarParams.style.display = 'none'
+        }
+
+        const hypotenuseParams = document.getElementById('hypotenuse')
+        const hypotenuseParam1 = document.getElementById('hypotenuseParam1')
+        const hypotenuseParam4 = document.getElementById('hypotenuseParam4')
+        if (selectedAlgorithm === 'HYPOTENUSE') {
+            hypotenuseParam1.required = true
+            hypotenuseParam4.required = true
+            hypotenuseParams.style.display = 'flex'
+        } else {
+            hypotenuseParam1.required = false
+            hypotenuseParam4.required = false
+            hypotenuseParams.style.display = 'none'
+        }
+
+        const bcryptParams = document.getElementById('bcrypt')
+        const bcryptParam1 = document.getElementById('bcryptParam1')
+        if (selectedAlgorithm === 'BCRYPT') {
+            bcryptParam1.required = true
+            bcryptParams.style.display = 'flex'
+        } else {
+            bcryptParam1.required = false
+            bcryptParams.style.display = 'none'
+        }
+
+        const vigenereParams = document.getElementById('vigenere')
+        if (selectedAlgorithm === 'VIGENERE') {
+            vigenereParams.style.display = 'flex'
+        } else {
+            vigenereParams.style.display = 'none'
+        }
+        const substitution = document.getElementById('substitution')
+        const substitutionTable = document.getElementById('substitutionTable')
+        if (selectedAlgorithm === 'SUBSTITUTION') {
+            substitution.style.display = 'flex'
+            substitutionTable.style.display = 'flex'
+        } else {
+            substitution.style.display = 'none'
+            substitutionTable.style.display = 'none'
+        }
+
+        const tabularRouteShuffleParams = document.getElementById('tabularRouteShuffle')
+        const tabularRouteShuffleParam1 = document.getElementById("tabularRouteShuffleParam1")
+        const tabularRouteShuffleParam2 = document.getElementById("tabularRouteShuffleParam2")
+        const tabularRouteShuffleParam3 = document.getElementById("tabularRouteShuffleParam3")
+        if (selectedAlgorithm === 'TABULAR_ROUTE_SHUFFLE') {
+            tabularRouteShuffleParams.style.display = 'flex'
+            tabularRouteShuffleParam1.required = true
+            tabularRouteShuffleParam2.required = true
+            tabularRouteShuffleParam3.required = true
+        } else {
+            tabularRouteShuffleParams.style.display = 'none'
+            tabularRouteShuffleParam1.required = false
+            tabularRouteShuffleParam2.required = false
+            tabularRouteShuffleParam3.required = false
+        }
+
+        const polybiusSquareParams = document.getElementById('polybiusSquare')
+        const polybiusSquareParam1 = document.getElementById('polybiusSquareParam1')
+        if (selectedAlgorithm === 'POLYBIUS_SQUARE') {
+            polybiusSquareParams.style.display = 'flex'
+            polybiusSquareParam1.required = true
+        } else {
+            polybiusSquareParams.style.display = 'none'
+            polybiusSquareParam1.required = false
+        }
+    }
+</script>
+<script>
+    const form = document.getElementById('form');
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        // собираем данные формы
+        const data = {
+            algorithm: form.algorithm.value,
+            params: [],
+            value: form.value.value
+        };
+        if (form.algorithm.value === 'CAESAR') {
+            const caesarParam1Value = document.getElementById("caesarParam1").value
+            data.params = [
+                parseInt(caesarParam1Value)
+            ];
+        } else if (form.algorithm.value === 'HYPOTENUSE') {
+            const hypotenuseParam1Value = document.getElementById("hypotenuseParam1").value
+            const hypotenuseParam2Value = document.getElementById("hypotenuseParam2").value
+            const hypotenuseParam3Value = document.getElementById("hypotenuseParam3").value
+            const hypotenuseParam4Value = document.getElementById("hypotenuseParam4").value
+            data.params = [
+                parseInt(hypotenuseParam1Value),
+                hypotenuseParam2Value ? parseInt(hypotenuseParam2Value) : null,
+                hypotenuseParam3Value ? parseInt(hypotenuseParam3Value) : null,
+                hypotenuseParam4Value
+            ];
+        } else if (form.algorithm.value === 'BCRYPT') {
+            const bcryptParam1Value = document.getElementById("bcryptParam1").value
+            data.params = [
+                parseInt(bcryptParam1Value)
+            ];
+        } else if (form.algorithm.value === 'VIGENERE') {
+            const vigenereKey = document.getElementById("vigenereKey").value
+            data.params = [
+                vigenereKey
+            ]
+        } else if (form.algorithm.value === 'BCRYPT') {
+            const bcryptParam1Value = document.getElementById("bcryptParam1").value
+            data.params = [
+                parseInt(bcryptParam1Value)
+            ];
+        } else if (form.algorithm.value === 'VIGENERE') {
+            const vigenereKey = document.getElementById("vigenereKey").value
+            data.value = data.value + ";;;" + vigenereKey
+        } else if (form.algorithm.value === 'SUBSTITUTION') {
+            const substitutionTableBody = document.querySelector("#substitutionTable tbody");
+            const rows = substitutionTableBody.querySelectorAll("tr");
+            const substitutions = {};
+
+            rows.forEach(row => {
+                const keyCell = row.querySelector("td:nth-child(1)");
+                const valueCell = row.querySelector("td:nth-child(2)");
+
+                if (keyCell && valueCell) {
+                    const key = keyCell.textContent.trim()[0];
+                    const value = valueCell.textContent.trim()[0];
+
+                    if (key && value) {
+                        substitutions[key] = value;
+                    }
+                }
+            });
+
+            data.params = [substitutions];
+        } else if (form.algorithm.value === 'TABULAR_ROUTE_SHUFFLE') {
+            const tabularRouteShuffleParam1Value = document.getElementById("tabularRouteShuffleParam1").value
+            const tabularRouteShuffleParam2Value = document.getElementById("tabularRouteShuffleParam2").value
+            const tabularRouteShuffleParam3Value = document.getElementById("tabularRouteShuffleParam3").value
+            data.params = [
+                parseInt(tabularRouteShuffleParam2Value),
+                parseInt(tabularRouteShuffleParam1Value),
+                tabularRouteShuffleParam3Value
+            ];
+        } else if (form.algorithm.value === 'POLYBIUS_SQUARE') {
+            const polybiusSquareParam1Value = document.getElementById("polybiusSquareParam1").value
+            data.params = [
+                polybiusSquareParam1Value
+            ]
+        }
+
+        // отправляем POST запрос на бэкенд
+        fetch('/api/encryption/decode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // получаем и обрабатываем ответ от бэкенда
+                console.log(data);
+
+                const responseHeader = document.getElementById("responseHeader")
+                responseHeader.style.display = 'block'
+                const response = document.getElementById("response")
+                response.style.display = 'block'
+                response.value = data.response
+
+                if (data.status === 'OK') {
+                    console.log('Status is OK')
+                } else {
+                    console.log('Status is not OK')
+                }
+            });
+
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const substitutionTable = new Map(); // Создаем таблицу замен
+
+        // Получаем элементы из DOM
+        const substitutionKeyInput = document.getElementById("substitutionKey");
+        const substitutionValueInput = document.getElementById("substitutionValue");
+        const addSubstitutionButton = document.getElementById("addSubstitution");
+        const substitutionTableBody = document.querySelector("#substitutionTable tbody");
+
+        // Обработчик нажатия кнопки "+"
+        addSubstitutionButton.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const key = substitutionKeyInput.value;
+            const value = substitutionValueInput.value;
+            if (key && value) {
+                // Добавляем подстановку в таблицу и в DOM
+                substitutionTable.set(key.trim(), value.trim());
+                const row = document.createElement("tr");
+                const keyCell = document.createElement("td");
+                const valueCell = document.createElement("td");
+                keyCell.textContent = key.trim();
+                valueCell.textContent = value.trim();
+                row.appendChild(keyCell);
+                row.appendChild(valueCell);
+                substitutionTableBody.appendChild(row);
+
+                // Очищаем поля ввода
+                substitutionKeyInput.value = "";
+                substitutionValueInput.value = "";
+            }
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

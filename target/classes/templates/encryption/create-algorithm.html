@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание алгоритма</title>
+</head>
+<body>
+<div>
+    <form method="post" action="/encryption/custom/save">
+        <label title="Тип">
+            <select>
+                <option th:each="algorithm : ${T(ru.ystu.encryptionapp.enumeration.AlgorithmType).values()}"
+                        th:value="${algorithm}" th:text="${algorithm}"></option>
+            </select>
+        </label>
+    </form>
+</div>
+</body>
+</html>

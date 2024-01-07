@@ -1,19 +1,20 @@
 package ru.ystu.encryptionapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.nio.charset.StandardCharsets;
+import ru.ystu.encryptionapp.enumeration.Alphabet;
 
 @Getter
 @Setter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity(name = "hypotenuse_encryption_algorithm")
-@DiscriminatorValue("oneWayDecryptable")
+@DiscriminatorValue("hypotenuseEncryption")
 public class HypotenuseEncryptionAlgorithm extends CustomEncryptionAlgorithm {
     private Integer horizontalOffset;
 
@@ -21,47 +22,141 @@ public class HypotenuseEncryptionAlgorithm extends CustomEncryptionAlgorithm {
 
     private Integer rounds;
 
-    @Override
-    public Object encode(String valueToEncode) {
-        String decodedValue = "";
+    private String alphabet;
 
-        for (int i = 0; i < rounds; i++) {
-            byte[] bytesEncoded = getBytesEncoded(valueToEncode);
+    @Transient
+    private final char[][] russianPolybiusSquare = Alphabet.RUSSIAN.getCharacters();
 
-            StringBuilder hexString = new StringBuilder();
-            // Переводим байты в шестнадцатеричное представление
-            for (byte b : bytesEncoded) {
-                hexString.append(String.format("%02X", b));
-            }
+    @Transient
+    private final char[][] englishPolybiusSquare = Alphabet.ENGLISH.getCharacters();
 
-            int len = hexString.toString().length();
-
-            // Обратно из шестнадцатеричного представления в байты
-            byte[] data = new byte[len / 2];
-            for (int j = 0; j < len; j += 2) {
-                data[j / 2] = (byte) ((Character.digit(hexString.charAt(j), 16) << 4)
-                        + Character.digit(hexString.charAt(j + 1), 16));
-            }
-
-            decodedValue = new String(data, StandardCharsets.UTF_8);
-        }
-
-        return decodedValue;
+    public HypotenuseEncryptionAlgorithm() {
     }
 
-    private byte[] getBytesEncoded(String valueToEncode) {
-        StringBuilder encodedValue = new StringBuilder();
-        for (char c : valueToEncode.toCharArray()) {
-            // Вычисляем гипотенузу и округляем до ближайшего целого
-            double hypotenuse = Math.sqrt(Math.pow(horizontalOffset, 2) + Math.pow(verticalOffset, 2));
-            int roundedHypotenuse = (int) Math.round(hypotenuse);
+    @SuppressWarnings("unused")
+    public HypotenuseEncryptionAlgorithm(Integer bothSideOffset) {
+        this.horizontalOffset = bothSideOffset;
+        this.verticalOffset = bothSideOffset;
+        this.rounds = 1;
+        this.alphabet = "RU";
+    }
 
-            // Смещаем букву в алфавите
-            char encodedChar = (char) (c + roundedHypotenuse);
+    @SuppressWarnings("unused")
+    public HypotenuseEncryptionAlgorithm(Integer horizontalOffset, Integer verticalOffset) {
+        this.horizontalOffset = horizontalOffset;
+        this.verticalOffset = verticalOffset;
+        this.rounds = 1;
+        this.alphabet = "RU";
+    }
 
-            encodedValue.append(encodedChar);
+    @SuppressWarnings("unused")
+    public HypotenuseEncryptionAlgorithm(Integer horizontalOffset, Integer verticalOffset, Integer rounds) {
+        this.horizontalOffset = horizontalOffset;
+        this.verticalOffset = verticalOffset;
+        this.rounds = rounds;
+        this.alphabet = "RU";
+    }
+
+    public HypotenuseEncryptionAlgorithm(Integer horizontalOffset, Integer verticalOffset, Integer rounds, String alphabet) {
+        this.horizontalOffset = horizontalOffset;
+        this.verticalOffset = verticalOffset;
+        this.rounds = rounds;
+        this.alphabet = alphabet;
+    }
+
+    @Override
+    public Object encode(String valueToEncode) {
+        for (int i = 0; i < rounds; i++) {
+            valueToEncode = encodeRound(valueToEncode);
         }
 
-        return encodedValue.toString().getBytes();
+        return valueToEncode;
+    }
+
+    private String encodeRound(String valueToEncode) {
+        valueToEncode = valueToEncode.toUpperCase();
+        StringBuilder encodedValue = new StringBuilder();
+
+        if (alphabet.equals("RU")) {
+            for (char c : valueToEncode.toCharArray()) {
+                for (int i = 0; i < Alphabet.RUSSIAN.getRowsNumber(); i++) {
+                    for (int j = 0; j < Alphabet.RUSSIAN.getColumnsNumber(); j++) {
+                        if (c == russianPolybiusSquare[j][i]) {
+                            char encodedChar;
+                            encodedChar =
+                                    russianPolybiusSquare
+                                            [(j + verticalOffset) % Alphabet.RUSSIAN.getColumnsNumber()]
+                                            [(i + horizontalOffset) % Alphabet.RUSSIAN.getRowsNumber()];
+                            encodedValue.append(encodedChar);
+                        }
+                    }
+                }
+            }
+        } else if (alphabet.equals("EN")) {
+            for (char c : valueToEncode.toCharArray()) {
+                for (int i = 0; i < Alphabet.ENGLISH.getRowsNumber(); i++) {
+                    for (int j = 0; j < Alphabet.ENGLISH.getColumnsNumber(); j++) {
+                        if (c == englishPolybiusSquare[j][i]) {
+                            char encodedChar;
+                            encodedChar =
+                                    englishPolybiusSquare
+                                            [(j + verticalOffset) % Alphabet.ENGLISH.getColumnsNumber()]
+                                            [(i + horizontalOffset) % Alphabet.ENGLISH.getRowsNumber()];
+                            encodedValue.append(encodedChar);
+                        }
+                    }
+                }
+            }
+        }
+
+        return encodedValue.toString();
+    }
+
+    @Override
+    public Object decode(String valueToDecode) {
+        for (int i = 0; i < rounds; i++) {
+            valueToDecode = decodeRound(valueToDecode);
+        }
+
+        return valueToDecode;
+    }
+
+    private String decodeRound(String valueToDecode) {
+        valueToDecode = valueToDecode.toUpperCase();
+        StringBuilder decodedValue = new StringBuilder();
+
+        if (alphabet.equals("RU")) {
+            for (char c : valueToDecode.toCharArray()) {
+                for (int i = 0; i < Alphabet.RUSSIAN.getRowsNumber(); i++) {
+                    for (int j = 0; j < Alphabet.RUSSIAN.getColumnsNumber(); j++) {
+                        if (c == russianPolybiusSquare[j][i]) {
+                            char decodedChar;
+                            decodedChar =
+                                    russianPolybiusSquare
+                                            [Math.floorMod(j - verticalOffset, Alphabet.RUSSIAN.getColumnsNumber())]
+                                            [Math.floorMod(i - horizontalOffset, Alphabet.RUSSIAN.getRowsNumber())];
+                            decodedValue.append(decodedChar);
+                        }
+                    }
+                }
+            }
+        } else if (alphabet.equals("EN")) {
+            for (char c : valueToDecode.toCharArray()) {
+                for (int i = 0; i < Alphabet.ENGLISH.getRowsNumber(); i++) {
+                    for (int j = 0; j < Alphabet.ENGLISH.getColumnsNumber(); j++) {
+                        if (c == englishPolybiusSquare[j][i]) {
+                            char decodedChar;
+                            decodedChar =
+                                    englishPolybiusSquare
+                                            [Math.floorMod(j - verticalOffset, Alphabet.ENGLISH.getColumnsNumber())]
+                                            [Math.floorMod(i - horizontalOffset, Alphabet.ENGLISH.getRowsNumber())];
+                            decodedValue.append(decodedChar);
+                        }
+                    }
+                }
+            }
+        }
+
+        return decodedValue.toString();
     }
 }

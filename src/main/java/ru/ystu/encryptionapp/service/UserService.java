@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.ystu.encryptionapp.dto.UserDTO;
 import ru.ystu.encryptionapp.entity.UserEntity;
 
-import java.util.Collection;
 import java.util.UUID;
 
 public interface UserService extends UserDetailsService {

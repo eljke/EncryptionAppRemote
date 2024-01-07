@@ -25,6 +25,9 @@ public abstract class EncryptionAlgorithm {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "decryption_direction")
     private DecryptionDirection decryptionDirection;
@@ -42,4 +45,6 @@ public abstract class EncryptionAlgorithm {
     }
 
     public abstract Object encode(String valueToEncode);
+
+    public abstract Object decode(String valueToDecode);
 }

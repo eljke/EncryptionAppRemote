@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шифры перестановки</title>
+    <link rel="stylesheet" href="../style/styles_permutation.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Главная страница</a></li>
+            <li><a href="Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="permutation.html">Шифры перестановки</a></li>
+            <li><a href="polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="vigenere.html">Шифр Виженера</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="content">
+    <h1>Шифры перестановки</h1>
+    <div class="block-container">
+        <div class="text-container">
+            <div style="width: 100%" class="container">
+                <div class="text-box">
+                    <p style="margin-top: 0"><span class="pink">Шифр перестановки</span> — шифр, в котором преобразования <span class="green">изменяют только порядок следования символов</span> исходного открытого текста, но <span class="green">не изменяют их самих.</span></p>
+                    <p style="margin-bottom: 0">Типичный пример шифра перестановки — <span class="cyan">анаграммы</span>. Этот литературный прием также <span class="green">состоит в перестановке букв слова или словосочетания</span>, что дает другое слово или словосочетание. Например, <span class="green">лепесток — телескоп, вертикаль — кильватер</span>, и др.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-container">
+        <div></div>
+        <div class="text-container">
+            <div class="container">
+                <div class="text-box">
+                    <p style="margin-top: 0"><span class="cyan">Шифр табличной маршрутной перестановки</span> — вид шифра простой перестановки, в котором <span class="green">шифро-текст получают при списывании по маршруту</span> (например, сверху-вниз слева-направо).</p>
+                    <table id="table"></table>
+                    <br>
+                    <h4 style="margin-top: 0; margin-bottom: 1vh">Введите размер таблицы:</h4>
+                    <input type="number" min="1" step="1" max="15" id="inputRows" class="table-size input-field" value="5" placeholder="Количество строк" style="text-align: right;"> x
+                    <input type="number" min="1" step="1" max="15" id="inputCols" class="table-size input-field" value="5" placeholder="Количество столбцов">
+                    <h4 style="margin-top: 0; margin-bottom: 1vh">Введите текст</h4>
+                    <input type="text" id="inputText" class="input-field" placeholder="Введите ваш текст">
+                    <h4 style="margin-top: 2vh; margin-bottom: 1vh">Результат шифрования</h4>
+                    <textarea id="outputText" class="input-field" readonly></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <video autoplay loop muted controls style="width: 100%; height: auto;">
+                <source src="../videos/Peres.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    <div class="not-container">
+        <div class="text-box">
+            <p style="margin: 0; padding-bottom: 2%" class="cyan">А как дешифровать?</p>
+            <p style="margin: 0"><span class="green">Дешифрование</span> текста, зашифрованного <span class="green">данным способом</span> является <span class="green">сложной задачей</span>.<br><span class="cian">Взлом</span> делится на <span class="green">два этапа</span>: определение <span class="green">длины перестановки</span> и нахождение <span class="green">самой перестановки</span>. Чтобы определить <span class="pink">длину перестановки</span>, текст разбивается на отрезки, где <span class="green">символы сравниваются</span> с символами в других отрезках. Если <span class="green">пара символов</span> встречается <span class="green">крайне редко</span> в обычной речи, это указывает на то, что эти два символа <span class="green">не следуют друг за другом</span> в зашифрованном тексте. После того, как будет <span class="green">найдена длина ключа</span>, методом перебора символов определяется <span class="pink">правильная последовательность</span>.</p>
+        </div>
+    </div>
+</div>
+<script src="../script/script_permutation.js"></script>
+</body>
+</html>

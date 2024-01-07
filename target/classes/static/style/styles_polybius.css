@@ -1,0 +1,159 @@
+body {
+    background-color: #2A313E;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: #2A313E;
+    border-bottom: 1px solid #222732;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.content {
+    margin: 0 5% 0;
+}
+
+h1 {
+    font-size: 64px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.block-container {
+    display: flex;
+    align-items: center; /* Выравнивание по центру */
+}
+
+.text-container {
+    flex: 1; /* Занимает всю доступную ширину */
+    align-self: flex-start;
+}
+
+.container {
+    width: 50vw;
+    background-color: #303744;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 24px; /* Отступ между блоками */
+}
+
+.text-box {
+    padding: 3vh 4vh;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    box-sizing: border-box;
+}
+
+.image-container {
+    margin-left: 20px; /* Отступ между текстом и изображением */
+    align-self: flex-start;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 7%;
+}
+
+
+::-webkit-input-placeholder {
+    color: #FFFFFF;
+}
+
+.input-field {
+    padding: 2%;
+    border: 1px solid #2E343E;
+    background-color: #2E343E;
+    border-radius: 50px;
+    font-size: 80%;
+    color: #FFFFFF;
+}
+
+.pink {
+    color: #FF77F1;
+}
+
+.green {
+    color: #D3FF77;
+}
+
+.cyan {
+    color: #7CE8E2;
+}
+
+table {
+    border-collapse: collapse;
+}
+td {
+    border: 3px groove #ddd;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.highlight {
+    background-color: #D3FF77;
+    transition: background-color 0.5s ease; /* Длительность анимации */
+}
+
+td {
+    cursor: pointer;
+    padding: 10px;
+    border: 3px groove #ddd;
+}
+
+.green-bg {
+    background-color: #D3FF77;
+}
+
+.blue-bg {
+    background-color: #7CE8E2;
+}
+
+.not-container {
+    background-color: #303744;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 24px; /* Отступ между блоками */
+}
+
+.container table {
+    margin: 0 auto; /* автоматически устанавливает отступы слева и справа для центрирования */
+    /* другие стили для таблицы, если нужны */
+}
+
+video::-webkit-media-controls {
+    display:none !important;
+}

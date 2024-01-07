@@ -99,7 +99,7 @@ public class VKOAuth2UserService extends DefaultOAuth2UserService {
             errorDetails
                     .append("UserInfo Uri: ")
                     .append(
-                    userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri()
+                            userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri()
                     );
             errorDetails
                     .append(", Error Code: ")

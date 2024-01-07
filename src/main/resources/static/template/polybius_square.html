@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квадрат Полибия</title>
+    <link rel="stylesheet" href="../style/styles_polybius.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../script/script_polybius.js"></script>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Главная страница</a></li>
+            <li><a href="Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="permutation.html">Шифры перестановки</a></li>
+            <li><a href="polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="vigenere.html">Шифр Виженера</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="content">
+    <h1>Квадрат Полибия</h1>
+    <div class="block-container">
+        <div class="text-container">
+            <div style="width: 100%" class="container">
+                <div class="text-box">
+                    <p style="margin: 0"><span class="pink">«Квадрат Полибия»</span> представляет собой <span
+                            class="green">квадрат 6х6 (5x5)</span>, столбцы и строки которого нумеруются цифрами от 1 до
+                        6 (5). Все <span class="green">буквы алфавита вписывались в квадрат</span> по одной на клетку.
+                        (можно в одну клетку поместите буквы е-э, и-й, ж-з, р-с, ф-х, ш-щ). <span class="green">Буквы расположены в алфавитном порядке</span>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-container">
+        <div class="text-container">
+            <div class="container">
+                <div class="text-box">
+                    <p style="margin-top: 0">Существует <span class="green">несколько методов шифрования</span> с
+                        помощью квадрата Полибия. <span class="green">Рассмотрим два из них</span>.</p>
+                    <p style="margin-top: 0"><span class="cyan">Метод 1</span>. На квадрате находим букву текста и берём
+                        нижнюю от неё в том же столбце. Если буква в нижней строке, то берём самую верхнюю из того же
+                        столбца.</p>
+                    <table id="alphabetTable">
+                        <tbody>
+                        <tr>
+                            <td>А</td>
+                            <td>Б</td>
+                            <td>В</td>
+                            <td>Г</td>
+                            <td>Д</td>
+                            <td>Е</td>
+                        </tr>
+                        <tr>
+                            <td>Ё</td>
+                            <td>Ж</td>
+                            <td>З</td>
+                            <td>И</td>
+                            <td>Й</td>
+                            <td>К</td>
+                        </tr>
+                        <tr>
+                            <td>Л</td>
+                            <td>М</td>
+                            <td>Н</td>
+                            <td>О</td>
+                            <td>П</td>
+                            <td>Р</td>
+                        </tr>
+                        <tr>
+                            <td>С</td>
+                            <td>Т</td>
+                            <td>У</td>
+                            <td>Ф</td>
+                            <td>Х</td>
+                            <td>Ц</td>
+                        </tr>
+                        <tr>
+                            <td>Ч</td>
+                            <td>Ш</td>
+                            <td>Щ</td>
+                            <td>Ъ</td>
+                            <td>Ы</td>
+                            <td>Ь</td>
+                        </tr>
+                        <tr>
+                            <td>Э</td>
+                            <td>Ю</td>
+                            <td>Я</td>
+                            <td>.</td>
+                            <td>,</td>
+                            <td>-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4 style="margin-top: 2%; margin-bottom: 1vh">Введите текст или нажмите на ячейки таблицы</h4>
+                    <input type="text" id="letterTextArea" class="input-field green" placeholder="Введите ваш текст"
+                           oninput="заменитьБукву()">
+                    <h4 style="margin-top: 2vh; margin-bottom: 1vh">Результат шифрования</h4>
+                    <textarea id="замененныйTextArea" class="input-field cyan" readonly style="resize: none"></textarea>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="image-container">
+            <video autoplay loop muted controls style="width: 100%; height: auto;">
+                <source src="../videos/pol11.mp4" type="video/mp4">
+            </video>
+            <!--            <img src="https://sun9-37.userapi.com/impg/lWye0CgZNwJkYWxzg-H20OwPdQ1WenPQYV7CUQ/mRqwKP5Pzsk.jpg?size=768x768&quality=96&sign=e1d1aa6d37872eee487bd9b8bafca954&type=album" alt="Изображение">-->
+        </div>
+    </div>
+    <div class="block-container">
+        <div class="text-box container">
+            <p><span class="cyan">Метод 2</span>. Сообщение преобразуется в координаты по квадрату Полибия, координаты
+                записываются вертикально:</p>
+            <table id="coordinateTable">
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>А</td>
+                    <td>Б</td>
+                    <td>В</td>
+                    <td>Г</td>
+                    <td>Д</td>
+                    <td>Е</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Ё</td>
+                    <td>Ж</td>
+                    <td>З</td>
+                    <td>И</td>
+                    <td>Й</td>
+                    <td>К</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Л</td>
+                    <td>М</td>
+                    <td>Н</td>
+                    <td>О</td>
+                    <td>П</td>
+                    <td>Р</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>С</td>
+                    <td>Т</td>
+                    <td>У</td>
+                    <td>Ф</td>
+                    <td>Х</td>
+                    <td>Ц</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Ч</td>
+                    <td>Ш</td>
+                    <td>Щ</td>
+                    <td>Ъ</td>
+                    <td>Ы</td>
+                    <td>Ь</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Э</td>
+                    <td>Ю</td>
+                    <td>Я</td>
+                    <td>.</td>
+                    <td>,</td>
+                    <td>-</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 style="margin-top: 2%; margin-bottom: 1vh">Введите текст или нажмите на ячейки таблицы</h4>
+            <input type="text" id="coordinate-input" class="input-field green" placeholder="Введите ваш текст">
+            <h4 style="margin-top: 2vh; margin-bottom: 1vh">Результат шифрования</h4>
+            <textarea id="coordinate-text" class="input-field cyan" readonly style="resize: none"></textarea>
+        </div>
+        <div class="image-container">
+            <video autoplay loop muted controls style="width: 100%; height: auto;">
+                <source src="../videos/pol21.mp4" type="video/mp4">
+            </video>
+            <!--            <img src="https://sun9-37.userapi.com/impg/lWye0CgZNwJkYWxzg-H20OwPdQ1WenPQYV7CUQ/mRqwKP5Pzsk.jpg?size=768x768&quality=96&sign=e1d1aa6d37872eee487bd9b8bafca954&type=album" alt="Изображение">-->
+        </div>
+    </div>
+    <div class="not-container">
+        <div class="text-box">
+            <p style="margin: 0; padding-bottom: 2%" class="cyan">А как дешифровать?</p>
+            <p style="margin: 0"><span class="green">Оба</span> описанных способа шифрования <span class="green">дешифруются</span> достаточно <span class="green">легко</span>. Сначала <span class="green">проверяется</span>,
+                было ли
+                сообщение <span class="green">зашифровано</span> с использованием <span class="green">обычного алфавита</span>, если да, то <span class="green">для первого метода</span> берутся буквы,
+                которые <span class="green">находятся в</span><span class="pink"> квадрате Полибия</span> над буквой из зашифрованного сообщения, а <span class="green">для второго метода</span>
+                берётся
+                буква, чьи координаты <span class="green">соответствуют паре цифр</span> из зашифрованного сообщения<br>Но если сообщение было
+                зашифровано по <span class="pink">квадрату Полибия</span>, в котором буквы алфавита <span class="green">расположены не по порядку</span>, то тогда
+                производится
+                <span class="green">частотный анализ</span>, с помощью которого и будет <span class="green">восстановлен исходный текст</span>.</p>
+        </div>
+    </div>
+</div>
+<script src="../script/script_polybius.js"></script>
+</body>
+</html>

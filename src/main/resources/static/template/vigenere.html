@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шифр Виженера</title>
+    <link rel="stylesheet" href="../style/styles_vigenere.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Главная страница</a></li>
+            <li><a href="Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="permutation.html">Шифры перестановки</a></li>
+            <li><a href="polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="vigenere.html">Шифр Виженера</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="content">
+    <h1>Шифр Виженера</h1>
+    <div class="block-container">
+        <div class="text-container">
+            <div style="width: 100%" class="container">
+                <div class="text-box">
+                    <p style="margin: 0"><span class="pink">Шифр Виженера</span> - это метод шифрования, при котором
+                        <span class="green">каждая буква в открытом тексте сдвигается на определенное количество позиций</span>
+                        в алфавите согласно ключу. Этот ключ может быть словом или фразой. Этот метод <span
+                                class="green">обеспечивает более сложную и безопасную защиту</span> текста, чем обычный
+                        шифр Цезаря, потому что <span class="green">сдвиги меняются для каждой буквы текста</span>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-container">
+        <div class="text-container">
+            <div class="container">
+                <div class="text-box">
+                    <p style="margin-top: 0; margin-bottom: 90px; opacity: 1" class="semi-transparent"
+                       onclick="changeOpacity(this)"><span class="cyan">Первым делом</span> создаётся <span
+                            class="green">таблица Виженера</span>. В каждой строке <span class="green">находятся буквы алфавита по порядку</span>,
+                        сдвинутые на одну букву вправо относительно предыдущей строки.</p>
+                    <p style="margin-top: 0; margin-bottom: 90px" class="semi-transparent"
+                       onclick="changeOpacity(this)">Затем выбирается <span class="cyan">ключевое слово</span> или фраза
+                        для шифрования сообщения. <span class="green">Символы ключевого слова повторяются</span>, пока
+                        их количество не станет равным длине шифруемого сообщения.</p>
+                    <p style="margin: 0" class="semi-transparent" onclick="changeOpacity(this)">Само <span class="cyan">шифрование</span>
+                        происходит так: берётся <span class="green">символ сообщения</span> и соответствующий <span
+                                class="green">символ ключевого слова</span>. В таблице Виженера находим <span
+                                class="green">стобец</span>, соответствующий символу из сообщения, и <span
+                                class="green">строку</span>, соответстующую символу ключевого слова. <span
+                                class="green">На пересечении будет зашифрованный символ</span>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="../images/vyzhener_table.png" alt="Your Image">
+        </div>
+    </div>
+    <h2>Попробуем зашифровать</h2>
+    <div style="width: 89vw" class="container">
+        <div class="block-container">
+            <div class="text-container">
+                <div class="text-box">
+                    <h4 style="margin-top: 0; margin-bottom: 1vh">Введите текст</h4>
+                    <input type="text" id="inputText" class="input-field" placeholder="Введите ваш текст">
+                </div>
+            </div>
+            <div class="text-container">
+                <div class="text-box">
+                    <h4 style="margin-top: 0; margin-bottom: 1vh">Ключевое слово</h4>
+                    <input type="text" id="shiftValue" class="input-field" placeholder="Введите ключевое слово">
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <table id="dynamicTable" border="1">
+                <tr id="tableRow">
+                    <!-- В этой строке будут появляться буквы из поля "Введите текст" -->
+                </tr>
+                <tr id="secondRow">
+                    <!-- В этой строке будут появляться буквы из поля "Ключевое слово" -->
+                </tr>
+            </table>
+        </div>
+        <div class="text-container">
+            <div class="text-box">
+                <h4 style="margin-top: 0; margin-bottom: 1vh">Результат</h4>
+                <textarea id="outputText" class="input-field" readonly style="resize: none"></textarea>
+            </div>
+        </div>
+    </div>
+    <p style="margin: 0; padding-bottom: 2%" id="vzlom" class="cyan">А как дешифровать?</p>
+    <div class="not-container text-box" style="margin-bottom: 3%">
+
+        <p style="margin: 0">Основным <span class="green">недостатком</span> <span class="pink">шифра Виженера</span> является тот факт, что его <span class="green">ключ повторяется</span>.
+            Это значит, что его <span class="green">криптоанализ</span> делится на <span class="green">два этапа</span>: поиск <span class="green">длины ключа</span> и <span class="green">частотный анализ</span>
+            фрагментов текста.</p>
+    </div>
+    <div class="block-container">
+        <div class="not-container">
+            <div class="text-box">
+                <p style="margin: 0">На <span class="pink">первом этапе</span> нужно взять <span class="green">каждую вторую букву</span> текста и провести для
+                    <span class="green">полученной последовательности</span> букв <span class="green">анализ распределения частот</span>. После этого нужно также сделать с
+                    <span class="green">каждой третьей буквой</span> и так далее. Как только распределение частот букв <span class="green">начнёт сильно отличаться</span> от
+                    <span class="green">равномерного</span>, то это будет значить, что <span class="green">длина ключа найдена</span>.</p>
+            </div>
+        </div>
+        <img class="small-image-right" src="../images/key.jpg"
+             alt="Ryan Gosling">
+    </div>
+    <div style="margin-bottom: 5%" class="block-container">
+        <img class="small-image-left" src="../images/runden.jpg"
+             alt="Ryan Gosling">
+        <div class="not-container-left">
+            <div class="text-box">
+                <p style="margin: 0">На <span class="pink">втором этапе</span> тест <span class="green">делится на
+                    отрезки</span>, равные <span class="green">длине ключа</span>, после чего для <span class="green">каждого фрагмента</span> проводится <span class="green">частотный анализ</span> как для
+                    <a href="deCaesar.html" class="pink">взлома шифра Цезаря</a>.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../script/script_vigenere2.js"></script>
+<script src="../script/script_vigenere.js"></script>
+</body>
+</html>
