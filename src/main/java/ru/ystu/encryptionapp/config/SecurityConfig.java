@@ -3,14 +3,15 @@ package ru.ystu.encryptionapp.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
@@ -23,7 +24,9 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import ru.ystu.encryptionapp.enumeration.Provider;
 import ru.ystu.encryptionapp.service.UserService;
 import ru.ystu.encryptionapp.utils.BCryptPasswordEncoderWrapper;
@@ -41,6 +44,7 @@ public class SecurityConfig {
     private final InMemoryUsers inMemoryUsers;
     private Provider provider;
     private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private static final String API_URL_PATTERN = "/**";
 
     public SecurityConfig(UserService userService, BCryptPasswordEncoderWrapper bCryptPasswordEncoderWrapper, InMemoryUsers inMemoryUsers, VKOAuth2UserService vkOAuth2UserService) {
         this.userService = userService;
@@ -59,7 +63,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            HandlerMappingIntrospector introspector) throws Exception {
+        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
+
+        http.csrf(csrfConfigurer ->
+                csrfConfigurer.ignoringRequestMatchers(mvcMatcherBuilder.pattern(API_URL_PATTERN),
+                        PathRequest.toH2Console()));
+
+        http.headers(headersConfigurer ->
+                headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+
         http
                 .requestCache((cache) -> cache
                         .requestCache(new HttpSessionRequestCache()).disable()
@@ -111,15 +126,7 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("", "/", "/home", "/encode",
-                                "/register", "/login", "/logout", "/change-password", "/oauth/**",
-                                "/static/**", "/images/**", "/styles/**", "/scripts/**", "/docs/**", "/favicon.*",
-                                "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/user/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/user/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/user/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/user/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/user/list", "/admin/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(mvcMatcherBuilder.pattern(API_URL_PATTERN)).permitAll()
                         .anyRequest().authenticated()
                 );
 
