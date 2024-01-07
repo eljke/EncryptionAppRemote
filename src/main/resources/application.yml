@@ -3,6 +3,7 @@ app:
     host: ${SERVER_HOST:localhost}
     port: ${SERVER_PORT:8080}
     address: ${app.protocol}://${app.host}:${app.port}
+    hostingAddress: ${SERVER_HOSTING_ADDRESS:${app.address}}
     cors:
         allowedOrigins: ${app.protocol}://${app.host}:3000 # Comma separated list of allowed origins
         maxAgeSeconds: 3600
@@ -27,7 +28,7 @@ spring:
                         client-secret: ${VK.client-secret}
                         client-authentication-method: client_secret_post
                         authorization-grant-type: authorization_code
-                        redirect-uri: ${app.address}/login/oauth2/code/vk
+                        redirect-uri: ${app.hostingAddress}/login/oauth2/code/vk
                         scope:
                             - email
                 provider:
