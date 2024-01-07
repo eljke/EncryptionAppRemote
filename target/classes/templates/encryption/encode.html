@@ -518,10 +518,12 @@
         const responseHeader = document.getElementById("responseHeader");
         const saveButton = document.getElementById("saveButton");
 
-        if (responseHeader.style.display === "block") {
-            saveButton.style.display = "block";
-        } else {
-            saveButton.style.display = "none";
+        if (saveButton) {
+            if (responseHeader.style.display === "block") {
+                saveButton.style.display = "block";
+            } else {
+                saveButton.style.display = "none";
+            }
         }
     }
 
