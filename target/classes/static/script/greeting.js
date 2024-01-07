@@ -12,3 +12,4 @@ if (currentTime > 5 && currentTime < 12) {
 }
 
 document.getElementById("greeting").innerText = greeting;
+document.getElementById("greeting-container").style.visibility = 'visible';
