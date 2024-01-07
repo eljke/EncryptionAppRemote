@@ -1,0 +1,67 @@
+app:
+    cors:
+        allowedOrigins: http://localhost:3000 # Comma separated list of allowed origins
+        maxAgeSeconds: 3600
+spring:
+    security:
+        oauth2:
+            client:
+                registration:
+                    github:
+                        client-id: b6e6cb558c23ee00a1f2
+                        client-secret: fb4cca14027eb95aaa1f283a1d6e2bff23c00b2e
+                    google:
+                        client-id: 598195243987-ka1nmjt3i4j7s1nk2n5ivi08av34vf3i.apps.googleusercontent.com
+                        client-secret: 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
+                    VK:
+                        client-id: 51748835
+                        client-secret: 8BqjW0zzH0BrvRY5esQG
+                        client-authentication-method: client_secret_post
+                        authorization-grant-type: authorization_code
+                        redirect-uri: http://localhost:8080/login/oauth2/code/vk
+                        scope:
+                            - email
+                    Discord:
+                        client-id: 1151621803198914560
+                        client-secret: -5PnBcTaY0m1hENVbKw53nhYMNf8jcCe
+                        client-authentication-method: client_secret_post
+                        authorization-grant-type: authorization_code
+                        redirect-uri: http://localhost:8080/login/oauth2/code/discord
+                        scope:
+                            - identify
+                            - guilds
+                            - email
+                    Yandex:
+                        client-id: 604a72d776a344cca80a480523308489
+                        client-secret: 117039d7956a49bcb0a88c0d089c4625
+                        client-authentication-method: client_secret_post
+                        authorization-grant-type: authorization_code
+                        redirect-uri: http://localhost:8080/login/oauth2/code/yandex
+                        scope:
+                            -
+                provider:
+                    github:
+                        user-name-attribute: login
+                    google:
+                        user-name-attribute: name
+                    VK:
+                        authorization-uri: https://oauth.vk.com/authorize
+                        token-uri: https://oauth.vk.com/access_token
+                        user-info-uri: https://api.vk.com/method/users.get?v=5.131&fields=photo_max
+                        user-name-attribute: first_name
+                    Discord:
+                        authorization-uri: https://discordapp.com/api/oauth2/authorize
+                        token-uri: https://discordapp.com/api/oauth2/token
+                        user-info-uri: https://discordapp.com/api/users/@me
+                        user-name-attribute: username
+                    Yandex:
+                        authorization-uri: https://oauth.yandex.ru/authorize
+                        token-uri: https://oauth.yandex.ru/access_token
+                        user-info-uri: https://login.yandex.ru/info
+                        user-name-attribute: display_name
+    devtools:
+        restart:
+            enabled: false
+logging:
+    level:
+        root: info

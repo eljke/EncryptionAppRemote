@@ -9,10 +9,10 @@
 		<relativePath/>
 	</parent>
 	<groupId>ru.ystu</groupId>
-	<artifactId>EncryptionApp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>EncryptionApp</name>
-	<description>EncryptionApp</description>
+	<artifactId>EncryptionAppRemote</artifactId>
+	<version>1.0.0</version>
+	<name>EncryptionAppRemote</name>
+	<description>EncryptionAppRemote</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
