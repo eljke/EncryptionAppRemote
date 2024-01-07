@@ -175,7 +175,7 @@ public class SecurityConfig {
                             Objects.requireNonNull(oAuth2User.getAttribute("first_name")) +
                             " " +
                             Objects.requireNonNull(oAuth2User.getAttribute("last_name"));
-        // For GitHub
+            // For GitHub
         } else if (oAuth2User.getAttribute("login") != null) {
             provider = Provider.GITHUB;
             return
@@ -183,7 +183,7 @@ public class SecurityConfig {
                             Objects.requireNonNull(oAuth2User.getAttribute("id")) +
                             " " +
                             Objects.requireNonNull(oAuth2User.getAttribute("login"));
-        // For Discord
+            // For Discord
         } else if (oAuth2User.getAttribute("username") != null && oAuth2User.getAttribute("email") != null) {
             provider = Provider.DISCORD;
             return
