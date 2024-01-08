@@ -1,0 +1,62 @@
+services:
+  # Spring Boot Application
+  - type: web
+    name: spring-boot-app
+    runtime: docker
+    image:
+      url: docker-spring-boot-postgres:latest
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://db:5432/encryption
+      - key: SPRING_DATASOURCE_USERNAME
+        value: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: password
+      - key: SPRING_JPA_GENERATE_DDL
+        value: true
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+    ports:
+      - 8080
+
+  # PostgreSQL Database
+  - type: pserv
+    name: db
+    image:
+      url: postgres:15.3-alpine
+    envVars:
+      - key: POSTGRES_USER
+        value: user
+      - key: POSTGRES_PASSWORD
+        value: password
+      - key: POSTGRES_DB
+        value: encryption
+    ports:
+      - 5432
+
+  # Grafana
+  - type: web
+    name: grafana
+    build:
+      context: ./scripts/config/grafana
+      dockerfile: Dockerfile
+    volumes:
+      - grafana-data:/var/lib/grafana
+    envVars:
+      - key: GF_SECURITY_ADMIN_USER
+        value: admin
+      - key: GF_SECURITY_ADMIN_PASSWORD
+        value: admin
+    ports:
+      - 3000
+
+  # Prometheus
+  - type: web
+    name: prometheus
+    image:
+      url: prom/prometheus
+    volumes:
+      - ./scripts/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - 9090
