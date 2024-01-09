@@ -1,5 +1,6 @@
 package ru.ystu.encryptionapp.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import ru.ystu.encryptionapp.service.UserService;
 
 import java.util.UUID;
 
+@Hidden
 @RestController
 @RequestMapping("/user")
 public class UserController {

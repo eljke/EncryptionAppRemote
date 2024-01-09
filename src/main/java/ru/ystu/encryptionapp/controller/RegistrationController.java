@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.ystu.encryptionapp.dto.UserDTO;
+import ru.ystu.encryptionapp.dto.ApiBaseDTO;
+import ru.ystu.encryptionapp.dto.ApiErrorDTO;
+import ru.ystu.encryptionapp.dto.ApiResponseDTO;
 import ru.ystu.encryptionapp.entity.UserEntity;
 import ru.ystu.encryptionapp.service.UserService;
 
@@ -17,8 +19,27 @@ public class RegistrationController {
         this.service = service;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestBody UserEntity user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createUser(user));
+    @PostMapping("/api/register")
+    public ResponseEntity<ApiBaseDTO> registerUser(@RequestBody UserEntity user) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(
+                            new ApiResponseDTO.Builder()
+                                    .withStatus(HttpStatus.CREATED)
+                                    .withResponse(service.createUser(user))
+                                    .build()
+                    );
+        } catch (Exception e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(
+                            new ApiErrorDTO.Builder()
+                                    .withStatus(HttpStatus.BAD_REQUEST)
+                                    .withResponse(e.getMessage())
+                                    .withCause(e.getCause())
+                                    .build()
+                    );
+        }
     }
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -12,6 +14,8 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ToString
 public class EncodeRequestAndEncryptedValueDTO {
+    @JsonProperty("id")
+    private UUID id;
     @JsonProperty("encodeRequest")
     private EncodeRequestDTO encodeRequest;
     @JsonProperty("encodedValue")

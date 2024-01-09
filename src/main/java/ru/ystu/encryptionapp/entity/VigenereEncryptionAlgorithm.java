@@ -32,7 +32,7 @@ public class VigenereEncryptionAlgorithm extends BuiltinEncryptionAlgorithm {
             char originalChar = valueToEncode.charAt(i);
 
             // Проверяем, является ли символ буквой русского алфавита
-            char keyChar = key.charAt(i % key.length());
+            char keyChar = key.toLowerCase().charAt(i % key.length());
             if (Character.isLetter(originalChar) && originalChar >= 'А' && originalChar <= 'я') {
                 char baseChar = Character.isUpperCase(originalChar) ? 'А' : 'а';
                 int alphabetSize = 32; // Размер русского алфавита
@@ -67,7 +67,7 @@ public class VigenereEncryptionAlgorithm extends BuiltinEncryptionAlgorithm {
             char originalChar = valueToDecode.charAt(i);
 
             // Проверяем, является ли символ буквой русского алфавита
-            char keyChar = key.charAt(i % key.length());
+            char keyChar = key.toLowerCase().charAt(i % key.length());
             if (Character.isLetter(originalChar) && originalChar >= 'А' && originalChar <= 'я') {
                 char baseChar = Character.isUpperCase(originalChar) ? 'А' : 'а';
                 int alphabetSize = 32; // Размер русского алфавита

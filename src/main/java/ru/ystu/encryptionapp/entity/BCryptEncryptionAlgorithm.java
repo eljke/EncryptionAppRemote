@@ -41,6 +41,7 @@ public class BCryptEncryptionAlgorithm extends BuiltinEncryptionAlgorithm {
         throw new NonDecryptableException();
     }
 
+    @SuppressWarnings("unused")
     public boolean matches(String rawValue, String encodedValue) {
         return bCryptPasswordEncoder.matches(rawValue, encodedValue);
     }

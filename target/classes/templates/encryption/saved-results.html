@@ -20,7 +20,6 @@
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -55,6 +54,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
         }
+
         table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
             content: " \25B4\25BE"
         }
@@ -69,6 +69,11 @@
             </li>
         </ul>
         <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/registration}">
+                    <i class="fas fa-clipboard-list"></i> Регистрация
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">
                     <i class="fas fa-sign-in-alt"></i> Вход
@@ -90,10 +95,22 @@
     </nav>
 </div>
 <h2 style="text-align: center">Сохранённые результаты</h2>
+<br>
 <div style="display: flex; align-items: center; justify-content: center;">
     <br>
     <div class="table-responsive" style="width: auto">
-        <table class="table table-bordered table-striped sortable">
+        <div th:if="${results.isEmpty()}"
+             style="display: flex; align-items: center; justify-content: center; flex-direction: column">
+            <h4>У Вас пока нет сохранённых результатов</h4>
+            <br>
+            <a th:if="${isAuthenticated}" href="/encryption/encode" class="btn btn-primary">Попробовать</a>
+            <div style="max-width: max-content; margin: auto; display: flex; flex-direction: column; gap: 20px;">
+                <a th:if="${!isAuthenticated}" href="/login" class="btn btn-primary" style="flex-grow: 1; text-align: center;">Войти</a>
+                <a th:if="${!isAuthenticated}" href="/registration" class="btn btn-primary" style="flex-grow: 1; text-align: center;">Зарегистрироваться</a>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped sortable" th:unless="${results.isEmpty()}">
             <thead>
             <tr class="table-active">
                 <th class="sort"><i class="fa-solid fa-hashtag"></i>&nbsp;&nbsp;№</th>
@@ -211,6 +228,11 @@
                 <td th:text="${result.encodeRequest.value}"></td>
                 <td th:text="${result.encodedValue}"></td>
                 <td th:text="${result.date}"></td>
+                <td>
+                    <button onclick="deleteRow(this)" data-th-id="${result.id}" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Удалить
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -219,10 +241,32 @@
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const ths = document.querySelectorAll('th.sort');
-        ths.forEach(function(th) {
+        ths.forEach(function (th) {
             sorttable.innerSortFunction.apply(th, []);
         });
     });
+</script>
+<script>
+    function deleteRow(btn) {
+        const id = btn.getAttribute('id');
+        fetch('/api/encryption/result/' + id, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                    alert("Результат успешно удалён")
+                } else {
+                    response.json()
+                        .then(json => {
+                            console.error('Ошибка при удалении:', json);
+                        });
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+    }
 </script>
 </body>
 </html>

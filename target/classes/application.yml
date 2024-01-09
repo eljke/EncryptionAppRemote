@@ -37,9 +37,52 @@ spring:
                         token-uri: https://oauth.vk.com/access_token
                         user-info-uri: https://api.vk.com/method/users.get?v=5.131&fields=photo_max
                         user-name-attribute: first_name
-    devtools:
-        restart:
-            enabled: false
 logging:
     level:
         root: info
+management:
+    endpoints:
+        web:
+            base-path: /api/actuator
+            exposure:
+                include: health, info, env, beans, heapdump, loggers, metrics, prometheus
+    endpoint:
+        health:
+            enabled: true
+            show-details: always
+        info:
+            enabled: true
+        env:
+            show-values: always
+        beans:
+            enabled: true
+        heapdump:
+            enabled: true
+        loggers:
+            enabled: true
+        metrics:
+            enabled: true
+    info:
+        env:
+            enabled: true
+        git:
+            enabled: true
+            mode: full
+        build:
+            enabled: true
+        java:
+            enabled: true
+    metrics:
+        distribution:
+            percentiles-histogram:
+                "[http.server.requests]": true
+    prometheus:
+        metrics:
+            export:
+                enabled: true
+springdoc:
+    swagger-ui:
+        path: /swagger-ui.html
+    show-actuator: true
+    show-login-endpoint: true
+    show-oauth2-endpoints: true

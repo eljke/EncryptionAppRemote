@@ -1,5 +1,6 @@
 package ru.ystu.encryptionapp.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import ru.ystu.encryptionapp.mapper.UserMapper;
 import ru.ystu.encryptionapp.service.EncodeRequestAndEncryptedValueService;
 import ru.ystu.encryptionapp.service.EncryptionService;
 import ru.ystu.encryptionapp.service.UserService;
+
+import java.util.UUID;
 
 import static ru.ystu.encryptionapp.controller.AccountController.getCombinedUsername;
 
@@ -82,6 +85,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @PostMapping("/custom/save")
     public ResponseEntity<ApiBaseDTO> save(@RequestBody final EncryptionAlgorithm encryptionAlgorithm) {
         try {
@@ -104,6 +108,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @GetMapping("/custom/all")
     public ResponseEntity<ApiBaseDTO> getAll() {
         try {
@@ -126,6 +131,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @GetMapping("/custom/@{name}")
     public ResponseEntity<ApiBaseDTO> getByName(@PathVariable final String name) {
         try {
@@ -151,6 +157,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @GetMapping("/custom/{id}")
     public ResponseEntity<ApiBaseDTO> getById(@PathVariable final String id) {
         try {
@@ -176,6 +183,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @PutMapping("/custom/@{name}")
     public ResponseEntity<ApiBaseDTO> updateByName(@PathVariable final String name, @RequestBody final EncryptionAlgorithm algorithm) {
         try {
@@ -201,6 +209,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @PutMapping("/custom/{id}")
     public ResponseEntity<ApiBaseDTO> updateById(@PathVariable final String id, @RequestBody final EncryptionAlgorithm algorithm) {
         try {
@@ -226,6 +235,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @DeleteMapping("/custom/@{name}")
     public ResponseEntity<ApiBaseDTO> deleteByName(@PathVariable final String name) {
         try {
@@ -251,6 +261,7 @@ public class EncryptionController {
         }
     }
 
+    @Operation(hidden = true)
     @DeleteMapping("/custom/{id}")
     public ResponseEntity<ApiBaseDTO> deleteById(@PathVariable final String id) {
         try {
@@ -326,6 +337,28 @@ public class EncryptionController {
                             new ApiResponseDTO.Builder()
                                     .withStatus(HttpStatus.OK)
                                     .withResponse(encodeRequestAndEncryptedValueService.getAllByUser(UserMapper.INSTANCE.userDTOToUser(userFromDB)))
+                                    .build()
+                    );
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(
+                            new ApiErrorDTO.Builder()
+                                    .withStatus(HttpStatus.BAD_REQUEST)
+                                    .withResponse(e.getMessage())
+                                    .withCause(e.getCause())
+                                    .build()
+                    );
+        }
+    }
+
+    @DeleteMapping("/result/{id}")
+    public ResponseEntity<ApiBaseDTO> deleteResultById(final @PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok()
+                    .body(
+                            new ApiResponseDTO.Builder()
+                                    .withStatus(HttpStatus.OK)
+                                    .withResponse(encodeRequestAndEncryptedValueService.deleteById(id))
                                     .build()
                     );
         } catch (Exception e) {

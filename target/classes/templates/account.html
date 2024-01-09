@@ -39,6 +39,11 @@
         </ul>
         <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
             <li class="nav-item">
+                <a class="nav-link" th:href="@{/registration}">
+                    <i class="fas fa-clipboard-list"></i> Регистрация
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">
                     <i class="fas fa-sign-in-alt"></i> Вход
                 </a>

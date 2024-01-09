@@ -1,7 +1,6 @@
 package ru.ystu.encryptionapp.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +19,6 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -36,6 +34,7 @@ import java.util.*;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -43,7 +42,6 @@ public class SecurityConfig {
     private final BCryptPasswordEncoderWrapper bCryptPasswordEncoderWrapper;
     private final InMemoryUsers inMemoryUsers;
     private Provider provider;
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
     private static final String API_URL_PATTERN = "/**";
 
     public SecurityConfig(UserService userService, BCryptPasswordEncoderWrapper bCryptPasswordEncoderWrapper, InMemoryUsers inMemoryUsers, VKOAuth2UserService vkOAuth2UserService) {
@@ -84,8 +82,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(formLogin -> formLogin
                         .defaultSuccessUrl("/account")
+                        .successHandler(new LoginSuccessHandler())
                 )
                 .logout(withDefaults())
+                .logout(logout -> logout
+                        .logoutSuccessHandler(new LogoutSuccessHandler())
+                        .invalidateHttpSession(false)
+                )
                 .cors(withDefaults())
                 .oauth2Login(withDefaults())
                 .oauth2Login(oauth2 -> oauth2
@@ -96,32 +99,22 @@ public class SecurityConfig {
                                 .userService(vkOAuth2UserService)
                         )
                         .successHandler((request, response, authentication) -> {
-                            // TODO: Имплементировать остальных поставщиков OAuth2 помимо Google, Github, Discord и VK
                             try {
-                                if (authentication.getPrincipal() instanceof DefaultOidcUser defaultOidcUser) {
-                                    String email = defaultOidcUser.getEmail();
-                                    String name = defaultOidcUser.getName();
-                                    userService.processGoogleOAuth2PostLogin(email, name);
-                                    response.sendRedirect("/account");
-                                } else if (authentication.getPrincipal() instanceof DefaultOAuth2User oAuth2User) {
+                                if (authentication.getPrincipal() instanceof DefaultOAuth2User oAuth2User) {
                                     String combinedUsername = getCombinedUsername(oAuth2User);
                                     if (provider == Provider.VK) {
                                         String name = oAuth2User.getAttribute("first_name") + " " + oAuth2User.getAttribute("last_name");
                                         userService.processVKOAuth2PostLogin(combinedUsername, name);
-                                    } else if (provider == Provider.GITHUB) {
-                                        String name = oAuth2User.getAttribute("name");
-                                        userService.processGithubOAuth2PostLogin(combinedUsername, name);
-                                    } else if (provider == Provider.DISCORD) {
-                                        String name = oAuth2User.getAttribute("global_name");
-                                        userService.processDiscordOAuth2PostLogin(combinedUsername, name, oAuth2User.getAttribute("email"));
                                     }
-                                    LOG.info(oAuth2User.getAttributes().toString());
-                                    response.sendRedirect("/account");
+                                    log.info(oAuth2User.getAttributes().toString());
+
+                                    String redirectUrl = (String) request.getSession().getAttribute("prevPage");
+                                    response.sendRedirect(redirectUrl != null ? redirectUrl : "/");
                                 } else {
-                                    LOG.error("Unknown provider");
+                                    log.error("Unknown provider");
                                 }
                             } catch (Exception e) {
-                                LOG.error("Exception: ", e);
+                                log.error("Exception: ", e);
                             }
                         })
                 )

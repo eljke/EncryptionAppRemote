@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,6 +41,18 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserEntity user) {
         if (repository.findByUsername(user.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username is already taken");
+        }
+
+        if (repository.findByEmail(user.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("User with such email is already registered");
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("ADMIN"));
+
+        if (!isAdmin && user.getRole() != null && user.getRole().equals(Role.ADMIN)) {
+            throw new AccessDeniedException("Только администраторы могут создавать других администраторов");
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

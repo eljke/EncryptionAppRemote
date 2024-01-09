@@ -10,6 +10,7 @@ ru\ystu\encryptionapp\enumeration\AlgorithmType.class
 ru\ystu\encryptionapp\controller\AccountController.class
 ru\ystu\encryptionapp\entity\PolybiusSquareEncryptionAlgorithm.class
 ru\ystu\encryptionapp\service\EncodeRequestAndEncryptedValueService.class
+ru\ystu\encryptionapp\controller\RegistrationControllerUI.class
 ru\ystu\encryptionapp\config\InMemoryUsers.class
 ru\ystu\encryptionapp\mapper\EncryptionAlgorithmMapper.class
 ru\ystu\encryptionapp\utils\auth\service\VKOAuth2UserService$1.class
@@ -20,6 +21,7 @@ ru\ystu\encryptionapp\exception\NonDecryptableException.class
 ru\ystu\encryptionapp\dto\DecodeRequestDTO.class
 ru\ystu\encryptionapp\EncryptionApp.class
 ru\ystu\encryptionapp\repository\UserRepository.class
+ru\ystu\encryptionapp\config\LoginSuccessHandler.class
 ru\ystu\encryptionapp\enumeration\Role.class
 ru\ystu\encryptionapp\enumeration\Alphabet.class
 ru\ystu\encryptionapp\controller\UserController.class
@@ -45,10 +47,12 @@ ru\ystu\encryptionapp\service\EncryptionServiceImpl.class
 ru\ystu\encryptionapp\entity\UserEntity.class
 ru\ystu\encryptionapp\mapper\EncodeRequestAndEncryptedValueMapper.class
 ru\ystu\encryptionapp\repository\EncodeRequestAndEncryptedValueRepository.class
+ru\ystu\encryptionapp\config\LogoutSuccessHandler.class
 ru\ystu\encryptionapp\entity\EncryptionAlgorithm.class
 ru\ystu\encryptionapp\mapper\EncodeRequestAndEncryptedValueMapperImpl.class
 ru\ystu\encryptionapp\service\EncodeRequestAndEncryptedValueServiceImpl.class
 ru\ystu\encryptionapp\enumeration\Alphabet$2.class
+ru\ystu\encryptionapp\config\RequestFilter.class
 ru\ystu\encryptionapp\entity\BuiltinEncryptionAlgorithm.class
 ru\ystu\encryptionapp\entity\BCryptEncryptionAlgorithm.class
 ru\ystu\encryptionapp\utils\BCryptPasswordEncoderWrapper.class

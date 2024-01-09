@@ -1,5 +1,6 @@
 package ru.ystu.encryptionapp.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,18 +18,17 @@ import ru.ystu.encryptionapp.entity.EncryptionAlgorithm;
 import ru.ystu.encryptionapp.enumeration.AlgorithmType;
 import ru.ystu.encryptionapp.service.UserService;
 
+import java.util.Collections;
 import java.util.Objects;
 
 import static ru.ystu.encryptionapp.controller.AccountController.getCombinedUsername;
 
+@Slf4j
 @Controller
 @RequestMapping("/encryption")
 public class EncryptionControllerUI {
-    @Value("${app.host}")
-    private String host;
-
-    @Value("${app.port}")
-    private int port;
+    @Value("${app.hostingAddress}")
+    private String hostingAddress;
     private final RestTemplate restTemplate;
     private final UserService userService;
 
@@ -57,7 +57,7 @@ public class EncryptionControllerUI {
 
     @GetMapping("/custom/save")
     public String save(final Model model) {
-        String apiUrl = "http://" + host + ":" + port + "/api/encryption/custom/save";
+        String apiUrl = hostingAddress + "/api/encryption/custom/save";
         ResponseEntity<ApiBaseDTO> response = restTemplate.getForEntity(apiUrl, ApiBaseDTO.class);
         model.addAttribute("data", response.getBody());
 
@@ -78,9 +78,13 @@ public class EncryptionControllerUI {
                 UserDTO userFromDB = userService.getUserByUsername(userDetails.getUsername());
                 username = userFromDB.getUsername();
             }
-            String apiUrl = "http://" + host + ":" + port + "/api/encryption/result/all?username=" + username;
+            String apiUrl = hostingAddress + "/api/encryption/result/all?username=" + username;
             ResponseEntity<ApiBaseDTO> response = restTemplate.getForEntity(apiUrl, ApiBaseDTO.class);
+            model.addAttribute("isAuthenticated", true);
             model.addAttribute("results", Objects.requireNonNull(response.getBody()).getResponse());
+        } else {
+            model.addAttribute("isAuthenticated", false);
+            model.addAttribute("results", Collections.emptyList());
         }
 
         return "encryption/saved-results";

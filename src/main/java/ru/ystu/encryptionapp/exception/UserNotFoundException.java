@@ -4,10 +4,10 @@ import java.util.UUID;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(UUID id) {
-        super(String.format("User with id = %s not found", id));
+        super(String.format("Пользователь с id = %s не найден", id));
     }
 
     public UserNotFoundException(String username) {
-        super(String.format("User %s not found", username));
+        super(String.format("Пользователь '%s' не найден", username));
     }
 }
