@@ -40,11 +40,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createUser(UserEntity user) {
         if (repository.findByUsername(user.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Username is already taken");
+            throw new IllegalArgumentException("Пользователь с таким никнеймом уже существует");
         }
 
         if (repository.findByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("User with such email is already registered");
+            throw new IllegalArgumentException("Пользователь с такой почтой уже зарегистрирован");
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

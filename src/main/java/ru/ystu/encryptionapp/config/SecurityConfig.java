@@ -42,7 +42,21 @@ public class SecurityConfig {
     private final BCryptPasswordEncoderWrapper bCryptPasswordEncoderWrapper;
     private final InMemoryUsers inMemoryUsers;
     private Provider provider;
-    private static final String API_URL_PATTERN = "/**";
+    private static final String HOME_URL_PATTERN = "/";
+    private static final String API_URL_PATTERN = "/api/**";
+    private static final String ENCRYPTION_URL_PATTERN = "/encryption/**";
+    private static final String ACCOUNT_URL_PATTERN = "/account/**";
+    private static final String TEMPLATE_URL_PATTERN = "/template/**";
+    private static final String STYLE_URL_PATTERN = "/style/**";
+    private static final String SCRIPT_URL_PATTERN = "/script/**";
+    private static final String JS_URL_PATTERN = "/js/**";
+    private static final String CSS_URL_PATTERN = "/css/**";
+    private static final String IMAGES_URL_PATTERN = "/images/**";
+    private static final String SWAGGER1_URL_PATTERN = "/swagger-ui.html/**";
+    private static final String SWAGGER2_URL_PATTERN = "/swagger-ui/**";
+    private static final String API_DOCS_URL_PATTERN = "/v3/api-docs/**";
+    private static final String LOGIN_URL_PATTERN = "/login/**";
+    private static final String LOGOUT_URL_PATTERN = "/logout/**";
 
     public SecurityConfig(UserService userService, BCryptPasswordEncoderWrapper bCryptPasswordEncoderWrapper, InMemoryUsers inMemoryUsers, VKOAuth2UserService vkOAuth2UserService) {
         this.userService = userService;
@@ -119,7 +133,22 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(mvcMatcherBuilder.pattern(HOME_URL_PATTERN)).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern(API_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(ENCRYPTION_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(ACCOUNT_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(TEMPLATE_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(STYLE_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(SCRIPT_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(CSS_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(JS_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(IMAGES_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(SWAGGER1_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(SWAGGER2_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(API_DOCS_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(LOGIN_URL_PATTERN)).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(LOGOUT_URL_PATTERN)).permitAll()
+                        .requestMatchers("/actuator/env/**", "/actuator/health/**", "/user/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 );
 

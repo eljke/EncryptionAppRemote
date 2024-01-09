@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8; width=device-width; initial-scale=1"/>
+  <title>500 - Internal Server Error</title>
+  <link rel="stylesheet" th:href="@{/style/500.css}">
+</head>
+<body>
+<div class="container">
+  <div class="p-block">
+    <p class="info">О Нет! Ошибка Сервера! Коди грустит :(</p>
+    <p class="info" id="lower">или нет...</p>
+  </div>
+  <h1 class="internal" id="cody"><span class="five">5</span><span class="zero">0</span><span class="zero">0</span></h1>
+  <div class="link">
+    <a href="/">
+      На главную
+    </a>
+  </div>
+</div>
+</body>
+<script>
+  lowerp = document.getElementById("lower")
+  cody = document.getElementById("cody")
+  cody.onmouseover = cody.onmouseout = handler
+  async function handler(event) {
+    if (event.type === 'mouseover') {
+      lowerp.classList.remove('animate-out')
+      lowerp.style.opacity = '0'
+      lowerp.style.filter = 'blur(4)'
+      lowerp.classList.add('animate-in')
+    }
+    if (event.type === 'mouseout') {
+      lowerp.classList.remove('animate-in')
+      lowerp.style.opacity = '1'
+      lowerp.style.filter = 'blur(0)'
+      lowerp.classList.add('animate-out')
+    }
+  }
+</script>
+</html>

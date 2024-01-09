@@ -43,7 +43,6 @@ logging:
 management:
     endpoints:
         web:
-            base-path: /api/actuator
             exposure:
                 include: health, info, env, beans, heapdump, loggers, metrics, prometheus
     endpoint:
