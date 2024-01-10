@@ -120,7 +120,8 @@
                 <th class="sorttable_nosort"><i class="fa fa-sliders-h"></i>&nbsp;&nbsp;Параметры алгоритма</th>
                 <th><i class="fa-regular fa-envelope-open"></i>&nbsp;&nbsp;Значение до шифрования</th>
                 <th><i class="fa-regular fa-envelope"></i>&nbsp;&nbsp;Зашифрованное значение</th>
-                <th><i class="fa-regular fa-calendar-days"></i>&nbsp;&nbsp;Дата и время шифрования&nbsp;&nbsp;<i class="fas fa-info-circle dateInfoIcon"></i></th>
+                <th><i class="fa-regular fa-calendar-days"></i>&nbsp;&nbsp;Дата и время шифрования&nbsp;&nbsp;
+                    <i class="fas fa-info-circle dateInfoIcon" th:title="'Текущий часовой пояс системы: ' + ${serverTimeZone}"></i></th>
             </tr>
             </thead>
             <tbody>
@@ -269,22 +270,6 @@
                 console.error('Ошибка:', error);
             });
     }
-</script>
-<script>
-    function getTimeZoneString() {
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const now = new Date();
-        const timeZoneOffset = -now.getTimezoneOffset();
-        const sign = timeZoneOffset >= 0 ? '+' : '-';
-        const hours = Math.floor(Math.abs(timeZoneOffset) / 60);
-        const minutes = Math.abs(timeZoneOffset) % 60;
-        return timeZone + ' GMT' + sign + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
-    }
-
-    const icons = document.querySelectorAll('.dateInfoIcon');
-    icons.forEach(function(icon) {
-        icon.title = 'Текущий часовой пояс системы: ' + getTimeZoneString();
-    });
 </script>
 </body>
 </html>

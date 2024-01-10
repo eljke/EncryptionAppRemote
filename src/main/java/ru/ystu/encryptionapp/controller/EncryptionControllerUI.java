@@ -18,6 +18,9 @@ import ru.ystu.encryptionapp.entity.EncryptionAlgorithm;
 import ru.ystu.encryptionapp.enumeration.AlgorithmType;
 import ru.ystu.encryptionapp.service.UserService;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -86,6 +89,12 @@ public class EncryptionControllerUI {
             model.addAttribute("isAuthenticated", false);
             model.addAttribute("results", Collections.emptyList());
         }
+        ZoneId serverZoneId = ZoneId.systemDefault();
+        ZonedDateTime now = ZonedDateTime.now(serverZoneId);
+
+        String serverTimeZone = serverZoneId + " GMT" + DateTimeFormatter.ofPattern("XXX").format(now);
+
+        model.addAttribute("serverTimeZone", serverTimeZone);
 
         return "encryption/saved-results";
     }
