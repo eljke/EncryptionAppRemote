@@ -20,6 +20,8 @@
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -118,7 +120,7 @@
                 <th class="sorttable_nosort"><i class="fa fa-sliders-h"></i>&nbsp;&nbsp;Параметры алгоритма</th>
                 <th><i class="fa-regular fa-envelope-open"></i>&nbsp;&nbsp;Значение до шифрования</th>
                 <th><i class="fa-regular fa-envelope"></i>&nbsp;&nbsp;Зашифрованное значение</th>
-                <th><i class="fa-regular fa-calendar-days"></i>&nbsp;&nbsp;Дата и время шифрования</th>
+                <th><i class="fa-regular fa-calendar-days"></i>&nbsp;&nbsp;Дата и время шифрования&nbsp;&nbsp;<i class="fas fa-info-circle dateInfoIcon"></i></th>
             </tr>
             </thead>
             <tbody>
@@ -267,6 +269,22 @@
                 console.error('Ошибка:', error);
             });
     }
+</script>
+<script>
+    function getTimeZoneString() {
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const now = new Date();
+        const timeZoneOffset = -now.getTimezoneOffset();
+        const sign = timeZoneOffset >= 0 ? '+' : '-';
+        const hours = Math.floor(Math.abs(timeZoneOffset) / 60);
+        const minutes = Math.abs(timeZoneOffset) % 60;
+        return timeZone + ' GMT' + sign + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+    }
+
+    const icons = document.querySelectorAll('.dateInfoIcon');
+    icons.forEach(function(icon) {
+        icon.title = 'Текущий часовой пояс системы: ' + getTimeZoneString();
+    });
 </script>
 </body>
 </html>
