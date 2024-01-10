@@ -92,7 +92,8 @@ public class EncryptionControllerUI {
         ZoneId serverZoneId = ZoneId.systemDefault();
         ZonedDateTime now = ZonedDateTime.now(serverZoneId);
 
-        String serverTimeZone = serverZoneId + " GMT" + DateTimeFormatter.ofPattern("XXX").format(now);
+        String offset = DateTimeFormatter.ofPattern("XXX").format(now);
+        String serverTimeZone = serverZoneId + " GMT" + offset;
 
         model.addAttribute("serverTimeZone", serverTimeZone);
 
