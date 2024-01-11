@@ -12,13 +12,14 @@ spring:
       hibernate:
           ddl-auto: update
     datasource:
-        url: jdbc:h2:file:/data/demo
-        username: admin
-        password: admin
-        driverClassName: org.h2.Driver
+        url: ${database.url}
+        username: ${database.username}
+        password: ${database.password}
+        driverClassName: ${database.driver}
     config:
         import:
             - classpath:application-tokens.yml
+            - classpath:application-db.yml
     security:
         oauth2:
             client:
