@@ -16,6 +16,12 @@ spring:
         username: ${database.username}
         password: ${database.password}
         driverClassName: ${database.driver}
+        hikari:
+            maximum-pool-size: 5
+            minimum-idle: 2
+            idle-timeout: 10000
+            max-lifetime: 20000
+            connection-timeout: 30000
     config:
         import:
             - classpath:application-tokens.yml
