@@ -1,5 +1,5 @@
 database:
-  url: jdbc:postgresql://balarama.db.elephantsql.com/mhsnlyrg
-  username: mhsnlyrg
-  password: zeija0Sk6rb49S5GJ7M0sVB14XZBx8QZ
+  url: jdbc:postgresql://balarama.db.elephantsql.com/aeiewnxu
+  username: aeiewnxu
+  password: 0qFGh0eIRwCtualtR17sOIWMqEtpQQv0
   driver: org.postgresql.Driver

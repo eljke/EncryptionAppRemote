@@ -4,14 +4,18 @@ ru\ystu\encryptionapp\entity\TabularRouteShuffleEncryptionAlgorithm.class
 ru\ystu\encryptionapp\mapper\EncryptionAlgorithmMapperImpl.class
 ru\ystu\encryptionapp\dto\ApiErrorDTO.class
 ru\ystu\encryptionapp\controller\RegistrationController.class
+ru\ystu\encryptionapp\config\DataInitializer.class
 ru\ystu\encryptionapp\dto\ApiResponseDTO.class
 ru\ystu\encryptionapp\dto\UserDTO.class
 ru\ystu\encryptionapp\enumeration\AlgorithmType.class
 ru\ystu\encryptionapp\controller\AccountController.class
 ru\ystu\encryptionapp\entity\PolybiusSquareEncryptionAlgorithm.class
 ru\ystu\encryptionapp\service\EncodeRequestAndEncryptedValueService.class
+ru\ystu\encryptionapp\config\DatabaseCleanupJob.class
 ru\ystu\encryptionapp\controller\RegistrationControllerUI.class
 ru\ystu\encryptionapp\config\InMemoryUsers.class
+ru\ystu\encryptionapp\service\DatabaseServiceImpl.class
+ru\ystu\encryptionapp\service\DatabaseService.class
 ru\ystu\encryptionapp\mapper\EncryptionAlgorithmMapper.class
 ru\ystu\encryptionapp\utils\auth\service\VKOAuth2UserService$1.class
 ru\ystu\encryptionapp\entity\HypotenuseEncryptionAlgorithm.class
@@ -28,6 +32,7 @@ ru\ystu\encryptionapp\controller\UserController.class
 ru\ystu\encryptionapp\entity\CaesarEncryptionAlgorithm.class
 ru\ystu\encryptionapp\service\EncryptionService.class
 ru\ystu\encryptionapp\dto\EncodeRequestDTO.class
+ru\ystu\encryptionapp\controller\AdminController.class
 ru\ystu\encryptionapp\exception\UserNotFoundException.class
 ru\ystu\encryptionapp\enumeration\Provider.class
 ru\ystu\encryptionapp\dto\EncodeRequestAndEncryptedValueDTO.class

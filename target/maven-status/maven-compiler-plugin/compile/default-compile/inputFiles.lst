@@ -2,6 +2,7 @@ C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\entity\VigenereEncryptionAlgorithm.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\service\UserService.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\config\RequestFilter.java
+C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\config\DatabaseCleanupJob.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\EncryptionApp.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\mapper\UserMapper.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\dto\ApiResponseDTO.java
@@ -12,6 +13,7 @@ C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\service\EncryptionService.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\enumeration\Alphabet.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\service\EncryptionServiceImpl.java
+C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\service\DatabaseServiceImpl.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\service\EncodeRequestAndEncryptedValueService.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\service\EncodeRequestAndEncryptedValueServiceImpl.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\utils\BCryptPasswordEncoderWrapper.java
@@ -29,6 +31,7 @@ C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\enumeration\Role.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\dto\UserDTO.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\dto\DecodeRequestDTO.java
+C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\service\DatabaseService.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\enumeration\Provider.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\entity\EncodeRequestAndEncryptedValue.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\controller\EncryptionController.java
@@ -38,6 +41,7 @@ C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\config\LogoutSuccessHandler.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\entity\PolybiusSquareEncryptionAlgorithm.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\entity\CustomEncryptionAlgorithm.java
+C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\controller\AdminController.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\repository\UserRepository.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\utils\auth\service\VKOAuth2UserService.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\config\LoginSuccessHandler.java
@@ -52,6 +56,7 @@ C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\controller\UserController.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\dto\EncodeRequestAndEncryptedValueDTO.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\exception\NonDecryptableException.java
+C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\config\DataInitializer.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\dto\EncodeRequestDTO.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\entity\SubstitutionEncryptionAlgorithm.java
 C:\Projects\Java\Spring\EncryptionAppRemote\src\main\java\ru\ystu\encryptionapp\dto\ApiBaseDTO.java

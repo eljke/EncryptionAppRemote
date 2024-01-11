@@ -6,7 +6,7 @@ import ru.ystu.encryptionapp.entity.EncryptionAlgorithm;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-01-11T18:14:26+0300",
+    date = "2024-01-11T18:39:11+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 20.0.2 (Oracle Corporation)"
 )
 public class EncryptionAlgorithmMapperImpl implements EncryptionAlgorithmMapper {
