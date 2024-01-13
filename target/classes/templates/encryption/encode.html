@@ -6,75 +6,67 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-            crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .form-group {
-            display: block;
-        }
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../static/style/encode.css">
 
-        .menu {
-            margin-top: 20px;
-        }
-
-        .menu ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .menu ul li {
-            display: inline;
-            margin-right: 10px;
-        }
-
-        .menu a {
-            font-size: 20px;
-        }
-    </style>
 </head>
 <body onload="init()">
-<div class="container">
-    <nav class="menu navbar navbar-expand-lg navbar-light bg-light" style="padding-left: 16px; padding-right: 16px">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" th:href="@{/}">
+<header>
+    <nav>
+        <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navul">
+            <li><a class="nav-link" th:href="@{/}">
                 <i class="fas fa-home"></i> Главная</a>
             </li>
-        </ul>
-        <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
-            <li class="nav-item">
+            <li><a href="../../static/template/Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="../../static/template/permutation.html">Шифры перестановки</a></li>
+            <li><a href="../../static/template/polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="../../static/template/vigenere.html">Шифр Виженера</a></li>
+            <li><a th:href="@{/encryption/encode}">Зашифровать</a></li>
+            <li><a th:href="@{/encryption/decode}">Расшифровать</a></li>
+            <li class="nav-item" style="padding-right: 10vw">
                 <a class="nav-link" th:href="@{/registration}">
                     <i class="fas fa-clipboard-list"></i> Регистрация
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="margin-right: 5vw">
                 <a class="nav-link" th:href="@{/login}">
                     <i class="fas fa-sign-in-alt"></i> Вход
                 </a>
             </li>
         </ul>
-        <ul th:if="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
-            <li class="nav-item">
+        <ul th:if="${#authorization.expression('isAuthenticated()')}" class="navul">
+            <li><a class="nav-link" th:href="@{/}">
+                <i class="fas fa-home"></i> Главная</a>
+            </li>
+            <li><a href="../../static/template/Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="../../static/template/permutation.html">Шифры перестановки</a></li>
+            <li><a href="../../static/template/polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="../../static/template/vigenere.html">Шифр Виженера</a></li>
+            <li><a th:href="@{/encryption/encode}">Зашифровать</a></li>
+            <li><a th:href="@{/encryption/decode}">Расшифровать</a></li>
+            <li class="nav-item" style="padding-right: 10vw">
                 <a class="nav-link" th:href="@{/account}">
                     <i class="fas fa-user"></i> Профиль
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="margin-right: 5vw">
                 <a class="nav-link" th:href="@{/logout}">
                     <i class="fas fa-sign-out-alt"></i> Выход
                 </a>
             </li>
         </ul>
     </nav>
-</div>
+</header>
 <div class="container mt-5" style="width: 50%">
-    <h2>Зашифровать значение</h2>
+    <h1>Зашифровать значение</h1>
     <br>
     <form id="form" method="post" th:object="${request}" action="/api/encryption/encode">
         <div class="form-group">
-            <h4><label for="algorithm">Алгоритм</label></h4>
-            <select id="algorithm" name="algorithm" class="form-control"
+            <h2 class="h12" style="margin: 0; padding: 0 0 3% 0"><label for="algorithm">Алгоритм</label></h2>
+            <select id="algorithm" name="algorithm" class="form-control input-field"
                     onchange="selectedAlgorithm = this.value; showAlgorithmParams(selectedAlgorithm)"
                     th:with="caesarText='Шифр Цезаря',
                 hypotenuseText='Метод гипотенузы',
@@ -83,7 +75,7 @@
                 substitutionText='Шифр подстановки',
                 tabularRouteShuffleText='Шифр табличной маршрутной перестановки',
                 polybiusSquareText='Квадрат Полибия'">
-                <option disabled selected>Выберите алгоритм</option>
+                <option class="opt" disabled selected>Выберите алгоритм</option>
                 <option th:each="algorithmType : ${algorithmTypes}"
                         th:value="${algorithmType}"
                         th:text="${algorithmType == algorithmType.CAESAR ? caesarText :
@@ -97,42 +89,42 @@
             </select>
         </div>
         <br>
-        <h4 id="paramsTitle">Параметры</h4>
+        <h2 id="paramsTitle" class="h12">Параметры</h2>
         <div id="caesar" class="form-group">
             <label for="caesarParam1">Смещение</label>
-            <input id="caesarParam1" name="params" type="number" class="form-control">
+            <input id="caesarParam1" name="params" type="number" class="input-field form-control">
         </div>
         <div id="hypotenuse" class="form-group">
-            <label for="hypotenuseParam1">Катет 1</label>
-            <input id="hypotenuseParam1" name="params" type="number" class="form-control">
-            <label for="hypotenuseParam2">Катет 2</label>
-            <input id="hypotenuseParam2" name="params" type="number" class="form-control">
-            <label for="hypotenuseParam3">Количество раундов</label>
-            <input id="hypotenuseParam3" name="params" type="number" class="form-control">
-            <label for="hypotenuseParam4">Алфавит</label>
-            <select id="hypotenuseParam4" name="params" class="form-control">
+            <label style="margin: 2%" for="hypotenuseParam1">Катет 1</label>
+            <input id="hypotenuseParam1" name="params" type="number" class="input-field form-control">
+            <label style="margin: 2%" for="hypotenuseParam2">Катет 2</label>
+            <input id="hypotenuseParam2" name="params" type="number" class="form-control input-field">
+            <label style="margin: 2%" for="hypotenuseParam3">Количество раундов</label>
+            <input id="hypotenuseParam3" name="params" type="number" class="input-field form-control">
+            <label style="margin: 2%" for="hypotenuseParam4">Алфавит</label>
+            <select id="hypotenuseParam4" name="params" class="input-field form-control">
                 <option value="RU">Русский</option>
                 <option value="EN">Английский</option>
             </select>
         </div>
         <div id="bcrypt" class="form-group">
-            <label for="bcryptParam1">Сложность</label>
-            <input id="bcryptParam1" name="params" type="number" class="form-control"
+            <label style="margin: 2%" for="bcryptParam1">Сложность</label>
+            <input id="bcryptParam1" name="params" type="number" class="input-field form-control"
                    placeholder="Должна быть равна -1 или 4 и больше">
         </div>
         <div id="vigenere" class="form-group">
-            <label for="vigenereKey">Ключ</label>
-            <input id="vigenereKey" name="params" type="text" class="form-control">
+            <label class="h2" for="vigenereKey">Ключ</label>
+            <input id="vigenereKey" name="params" type="text" class="input-field form-control">
         </div>
         <div id="substitution" class="form-group">
             <div class="row align-items-end">
                 <div class="col-md-3">
                     <label for="substitutionKey">Символ</label>
-                    <input id="substitutionKey" type="text" maxlength="1" class="form-control">
+                    <input id="substitutionKey" type="text" maxlength="1" class="input-field form-control">
                 </div>
                 <div class="col-md-3">
                     <label for="substitutionValue">Заменить на</label>
-                    <input id="substitutionValue" type="text" maxlength="1" class="form-control">
+                    <input id="substitutionValue" type="text" maxlength="1" class="input-field form-control">
                 </div>
                 <div class="col-md-1">
                     <button id="addSubstitution" class="btn btn-primary">+</button>
@@ -142,8 +134,8 @@
                 <table id="substitutionTable" class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th>Ключ</th>
-                        <th>Значение</th>
+                        <th style="color: white">Ключ</th>
+                        <th style="color: white">Значение</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -153,12 +145,12 @@
             </div>
         </div>
         <div id="tabularRouteShuffle" class="form-group">
-            <label for="tabularRouteShuffleParam1">Количество строк</label>
-            <input id="tabularRouteShuffleParam1" type="number" class="form-control">
-            <label for="tabularRouteShuffleParam2">Количество столбцов</label>
-            <input id="tabularRouteShuffleParam2" type="number" class="form-control">
-            <label for="tabularRouteShuffleParam3">Маршрут выписывания</label>
-            <select id="tabularRouteShuffleParam3" class="form-control">
+            <label style="margin: 2%" for="tabularRouteShuffleParam1">Количество строк</label>
+            <input id="tabularRouteShuffleParam1" type="number" class="input-field form-control">
+            <label style="margin: 2%" for="tabularRouteShuffleParam2">Количество столбцов</label>
+            <input id="tabularRouteShuffleParam2" type="number" class="input-field form-control">
+            <label style="margin: 2%" for="tabularRouteShuffleParam3">Маршрут выписывания</label>
+            <select id="tabularRouteShuffleParam3" class="input-field form-control">
                 <option disabled selected>Выберите маршрут</option>
                 <option value="UL">Сверху-вниз, слева-направо</option>
                 <option value="DR">Снизу-вверх, справа-налево</option>
@@ -167,16 +159,16 @@
         </div>
         <div id="polybiusSquare" class="form-group">
             <label for="polybiusSquareParam1">Алфавит</label>
-            <select id="polybiusSquareParam1">
+            <select id="polybiusSquareParam1" class="input-field">
                 <option value="RU">Русский</option>
                 <option value="EN">Английский</option>
             </select>
         </div>
         <br id="paramsBr" style="display: none">
-        <h4><label for="value">Значение</label></h4>
-        <input id="value" name="value" type="text" class="form-control">
-        <div class="mt-3" style="display: flex; align-items: center; margin: auto">
-            <button type="submit" class="btn btn-info btn-lg px-4 gap-3"
+        <h2  style="margin: 2%"><label for="value">Значение</label></h2>
+        <input style="margin: 0 3%; font-size: 130%;" id="value" name="value" type="text" class="input-field form-control">
+        <div class="mt-3 but-mid" style="display: flex; align-items: center; margin: auto">
+            <button type="submit" class="button btn btn-info btn-lg px-4 gap-3"
                     style="background-color: #696969" onclick="checkResponseHeaderVisibility()">
                 Зашифровать
             </button>
@@ -187,18 +179,20 @@
         </div>
     </form>
     <br>
-    <label id="responseHeader" for="response"
-           style="display: none; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px">
+    <label id="responseHeader" for="response" class="h2"
+           style="display: none; margin-bottom: 10px">
         Зашифрованное значение:
     </label>
-    <input type="text" id="response" class="form-control" readonly
-           style="display: none">
+    <input type="text" id="response" class="input-field form-control" readonly
+           style="display: none; background-color: #2E343E; font-size: 130%;">
     <br id="saveBtnBr">
+    <div class="but-mid">
     <button th:if="${#authorization.expression('isAuthenticated()')}" id="saveButton" type="button"
-            class="btn btn-outline-light btn-lg px-4 gap-3"
-            style="background-color: #008000" onclick="saveResult()">
+            class="but-mid button btn btn-outline-light btn-lg px-4 gap-3"
+            style="background-color: #008000; width: 22vw;" onclick="saveResult()">
         Сохранить результат
     </button>
+    </div>
 </div>
 <script>
     function init() {

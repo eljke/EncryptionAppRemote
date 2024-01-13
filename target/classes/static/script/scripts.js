@@ -40,3 +40,24 @@ const originalText = `А ещё интерактивные прототипы п
 
     animateText(originalText);
 });
+
+function updateOrientation() {
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    const isMobileScreen = window.matchMedia("(max-width: 768px)").matches;
+
+    if (isMobileScreen && isPortrait) {
+        document.getElementById('rotate-device').style.display = 'block';
+    } else {
+        document.getElementById('rotate-device').style.display = 'none';
+    }
+}
+
+window.addEventListener("resize", updateOrientation); // Обрабатывает изменение ориентации и изменение размера окна
+document.addEventListener("DOMContentLoaded", updateOrientation); // Проверяет ориентацию при загрузке страницы
+
+
+
+
+
+
+

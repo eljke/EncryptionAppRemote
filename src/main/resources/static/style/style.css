@@ -41,6 +41,24 @@
     word-break: break-all;
 }
 
+@media only screen and (max-width: 768px) {
+    #rotate-device {
+        display: none; /* Скрыт по умолчанию */
+        position: fixed; /* Фиксированное позиционирование */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 1); /* Полупрозрачный черный фон */
+        color: white;
+        text-align: center;
+        padding-top: 50%; /* Центрирование текста по вертикали */
+        font-size: 20px;
+        z-index: 1000; /* Поверх всех остальных элементов */
+    }
+}
+
+
 .page {
     background-color: #2A313E;
 }
@@ -54,6 +72,13 @@
     color: #383838;
 }
 
+/* Медиа-запрос для мобильных устройств */
+@media only screen and (max-height: 768px) {
+    .title {
+        font-size: 85px; /* В два раза меньше, чем исходный размер */
+    }
+}
+
 .subtitle {
     max-width: 60%;
     width: 100%;
@@ -63,6 +88,12 @@
     text-align: center;
     font-family: "Roboto-Medium", Helvetica, serif;
     color: #383838;
+}
+
+@media only screen and (max-height: 768px) {
+    .subtitle {
+        font-size: 20px;
+    }
 }
 
 .buttons {
@@ -82,6 +113,12 @@
     font-size: 22px;
     text-decoration: none;
     align-content: center;
+}
+
+@media only screen and (max-height: 768px) {
+    .button {
+        font-size: 10px;
+    }
 }
 
 .link {
@@ -136,6 +173,26 @@
     text-align: center;
     padding: 5vh 0 3vh 0;
     margin: 0;
+}
+
+#profileIcon {
+    position: absolute;
+    top: 10px;   /* Расстояние от верхнего края */
+    right: 10px; /* Расстояние от правого края */
+    font-size: 72px; /* Размер иконки */
+    text-decoration: none; /* Убрать подчеркивание у ссылки */
+    color: black; /* Цвет иконки */
+}
+
+#qr-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+#qr-container a img {
+    max-width: 20%;
 }
 
 .page-center {

@@ -7,7 +7,7 @@ import ru.ystu.encryptionapp.entity.EncodeRequestAndEncryptedValue;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-01-11T18:56:30+0300",
+    date = "2024-01-13T10:03:49+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 20.0.2 (Oracle Corporation)"
 )
 public class EncodeRequestAndEncryptedValueMapperImpl implements EncodeRequestAndEncryptedValueMapper {

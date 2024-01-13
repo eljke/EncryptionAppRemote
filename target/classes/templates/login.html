@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <h2>Please Login</h2>
+    <h2>Пожалуйста, авторизуйтесь</h2>
     <br/>
 </div>
 <div>
@@ -17,10 +17,10 @@
 <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;">
     <div class="border border-secondary rounded p-3">
         <div th:if="${param.error}">
-            <p class="text-danger">Invalid username or password.</p>
+            <p class="text-danger">Неправильное имя пользователя или пароль</p>
         </div>
         <div th:if="${param.logout}">
-            <p class="text-warning">You have been logged out.</p>
+            <p class="text-warning">Вы вышли из системы</p>
         </div>
         <div>
             <p><label>

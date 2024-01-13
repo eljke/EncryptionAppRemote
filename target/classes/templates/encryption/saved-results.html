@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../static/style/saved-results.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -62,40 +63,53 @@
         }
     </style>
 </head>
-<body>
-<div class="container">
-    <nav class="menu navbar navbar-expand-lg navbar-light bg-light">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" th:href="@{/}">
+<body style="background-color: #2A313E;">
+<header>
+    <nav>
+        <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navul">
+            <li><a class="nav-link" th:href="@{/}">
                 <i class="fas fa-home"></i> Главная</a>
             </li>
-        </ul>
-        <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
-            <li class="nav-item">
+            <li><a href="../../static/template/Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="../../static/template/permutation.html">Шифры перестановки</a></li>
+            <li><a href="../../static/template/polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="../../static/template/vigenere.html">Шифр Виженера</a></li>
+            <li><a th:href="@{/encryption/encode}">Зашифровать</a></li>
+            <li><a th:href="@{/encryption/decode}">Расшифровать</a></li>
+            <li class="nav-item" style="padding-right: 10vw">
                 <a class="nav-link" th:href="@{/registration}">
                     <i class="fas fa-clipboard-list"></i> Регистрация
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="margin-right: 5vw">
                 <a class="nav-link" th:href="@{/login}">
                     <i class="fas fa-sign-in-alt"></i> Вход
                 </a>
             </li>
         </ul>
-        <ul th:if="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
-            <li class="nav-item">
+        <ul th:if="${#authorization.expression('isAuthenticated()')}" class="navul">
+            <li><a class="nav-link" th:href="@{/}">
+                <i class="fas fa-home"></i> Главная</a>
+            </li>
+            <li><a href="../../static/template/Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="../../static/template/permutation.html">Шифры перестановки</a></li>
+            <li><a href="../../static/template/polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="../../static/template/vigenere.html">Шифр Виженера</a></li>
+            <li><a th:href="@{/encryption/encode}">Зашифровать</a></li>
+            <li><a th:href="@{/encryption/decode}">Расшифровать</a></li>
+            <li class="nav-item" style="padding-right: 10vw">
                 <a class="nav-link" th:href="@{/account}">
                     <i class="fas fa-user"></i> Профиль
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="margin-right: 5vw">
                 <a class="nav-link" th:href="@{/logout}">
                     <i class="fas fa-sign-out-alt"></i> Выход
                 </a>
             </li>
         </ul>
     </nav>
-</div>
+</header>
 <h2 style="text-align: center">Сохранённые результаты</h2>
 <br>
 <div style="display: flex; align-items: center; justify-content: center;">
@@ -115,13 +129,13 @@
         <table class="table table-bordered table-striped sortable" th:unless="${results.isEmpty()}">
             <thead>
             <tr class="table-active">
-                <th class="sort"><i class="fa-solid fa-hashtag"></i>&nbsp;&nbsp;№</th>
-                <th><i class="fa fa-tag"></i>&nbsp;&nbsp;Алгоритм</th>
-                <th class="sorttable_nosort"><i class="fa fa-sliders-h"></i>&nbsp;&nbsp;Параметры алгоритма</th>
-                <th><i class="fa-regular fa-envelope-open"></i>&nbsp;&nbsp;Значение до шифрования</th>
-                <th><i class="fa-regular fa-envelope"></i>&nbsp;&nbsp;Зашифрованное значение</th>
-                <th><i class="fa-regular fa-calendar-days"></i>&nbsp;&nbsp;Дата и время шифрования&nbsp;&nbsp;
-                    <i class="fas fa-info-circle dateInfoIcon" th:title="'Текущий часовой пояс системы: ' + ${serverTimeZone}"></i></th>
+                <th style="color: white" class="sort"><i style="color: white" class="fa-solid fa-hashtag"></i>&nbsp;&nbsp;№</th>
+                <th style="color: white"><i style="color: white" class="fa fa-tag"></i>&nbsp;&nbsp;Алгоритм</th>
+                <th style="color: white" class="sorttable_nosort"><i style="color: white" class="fa fa-sliders-h"></i>&nbsp;&nbsp;Параметры алгоритма</th>
+                <th style="color: white"><i style="color: white" class="fa-regular fa-envelope-open"></i>&nbsp;&nbsp;Значение до шифрования</th>
+                <th style="color: white"><i style="color: white" class="fa-regular fa-envelope"></i>&nbsp;&nbsp;Зашифрованное значение</th>
+                <th style="color: white"><i style="color: white" class="fa-regular fa-calendar-days"></i>&nbsp;&nbsp;Дата и время шифрования&nbsp;&nbsp;
+                    <i style="color: white" class="fas fa-info-circle dateInfoIcon" th:title="'Текущий часовой пояс системы: ' + ${serverTimeZone}"></i></th>
             </tr>
             </thead>
             <tbody>

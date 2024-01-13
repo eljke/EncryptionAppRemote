@@ -1,0 +1,153 @@
+body {
+    background-color: #2A313E;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: #2A313E;
+    border-bottom: 1px solid #222732;
+    padding: 10px 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.navul {
+    /*list-style-type: none;*/
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Выравнивает элементы по центру */
+    align-items: center; /* Выравнивает элементы по вертикали */
+    list-style: none; /* Убирает стандартные маркеры списка */
+    padding: 0; /* Убирает стандартные отступы */
+}
+
+header, nav {
+    display: flex;
+    align-items: center; /* Выравнивает дочерние элементы по центру по вертикали */
+    justify-content: center; /* Выравнивает дочерние элементы по центру по горизонтали */
+    height: 100%; /* Убедитесь, что у header или nav есть определенная высота */
+}
+
+nav ul li.nav-item {
+    position: absolute;
+    right: 0; /* Перемещает элемент в левую сторону */
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.form-group {
+    display: block;
+}
+
+.menu {
+    margin-top: 20px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.menu a {
+    font-size: 20px;
+}
+
+.input-field {
+    padding: 2%;
+    border: 1px solid #2E343E;
+    background-color: #2E343E;
+    border-radius: 50px;
+    font-size: 80%;
+    color: #FFFFFF;
+}
+
+
+
+
+input {
+    padding: 2%;
+    border: 1px solid #2E343E;
+    background-color: #2E343E;
+    border-radius: 50px;
+    font-size: 80%;
+    color: #FFFFFF;
+}
+
+option {
+    padding: 2%;
+    border: 1px solid #2E343E;
+    background-color: #2E343E;
+    font-size: 120%;
+    color: #FFFFFF;
+}
+
+.form-group {
+    padding: 3vh 4vh;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 64px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+h2 {
+    padding: 3vh 4vh;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.h2 {
+    padding: 3vh 4vh;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.button {
+    height: 7vh;
+    width: 12vw;
+    padding: 1vh 2vw;
+    border-radius: 20vh;
+    border: 3px solid #383838;
+    font-family: "Roboto-Bold", Helvetica, serif;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 22px;
+    text-decoration: none;
+    align-content: center;
+}
+
+.but-mid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h12 {
+    font-size: 40px;
+}
+
+#substitutionTable tbody td {
+    color: white;
+    text-align: center;
+}

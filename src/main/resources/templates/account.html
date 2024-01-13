@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="text/html, charset=UTF-8, width=device-width, initial-scale=1"/>
     <title>Аккаунт</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../static/style/account.css">
     <style>
         .menu {
             margin-top: 20px;
@@ -31,68 +33,81 @@
         }
     </style>
 </head>
-<body>
-<div class="container">
-    <nav class="menu navbar navbar-expand-lg navbar-light bg-light">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" th:href="@{/}">
+<body style="background-color: #2A313E;">
+<header>
+    <nav>
+        <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navul">
+            <li><a class="nav-link" th:href="@{/}">
                 <i class="fas fa-home"></i> Главная</a>
             </li>
-        </ul>
-        <ul th:unless="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
-            <li class="nav-item">
+            <li><a href="../../static/template/Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="../../static/template/permutation.html">Шифры перестановки</a></li>
+            <li><a href="../../static/template/polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="../../static/template/vigenere.html">Шифр Виженера</a></li>
+            <li><a th:href="@{/encryption/encode}">Зашифровать</a></li>
+            <li><a th:href="@{/encryption/decode}">Расшифровать</a></li>
+            <li class="nav-item" style="padding-right: 10vw">
                 <a class="nav-link" th:href="@{/registration}">
                     <i class="fas fa-clipboard-list"></i> Регистрация
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="margin-right: 5vw">
                 <a class="nav-link" th:href="@{/login}">
                     <i class="fas fa-sign-in-alt"></i> Вход
                 </a>
             </li>
         </ul>
-        <ul th:if="${#authorization.expression('isAuthenticated()')}" class="navbar-nav ms-lg-auto">
-            <li class="nav-item">
+        <ul th:if="${#authorization.expression('isAuthenticated()')}" class="navul">
+            <li><a class="nav-link" th:href="@{/}">
+                <i class="fas fa-home"></i> Главная</a>
+            </li>
+            <li><a href="../../static/template/Caesar.html">Шифр Цезаря</a></li>
+            <li><a href="../../static/template/permutation.html">Шифры перестановки</a></li>
+            <li><a href="../../static/template/polybius_square.html">Квадрат Полибия</a></li>
+            <li><a href="../../static/template/vigenere.html">Шифр Виженера</a></li>
+            <li><a th:href="@{/encryption/encode}">Зашифровать</a></li>
+            <li><a th:href="@{/encryption/decode}">Расшифровать</a></li>
+            <li class="nav-item" style="padding-right: 10vw">
                 <a class="nav-link" th:href="@{/account}">
                     <i class="fas fa-user"></i> Профиль
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="margin-right: 5vw">
                 <a class="nav-link" th:href="@{/logout}">
                     <i class="fas fa-sign-out-alt"></i> Выход
                 </a>
             </li>
         </ul>
     </nav>
-</div>
+</header>
 <div class="container mt-5">
-    <h2 id="greeting-container" class="mb-4" style="visibility: hidden">
+    <h1 id="greeting-container" class="mb-4" style="visibility: hidden">
         <span id="greeting"></span><span th:if="${user != null and user.getName() != null}"
               th:text="${user.getName() != null ? ', ' + user.getName() + '!' : '!'}"></span>
-    </h2>
+    </h1>
     <form th:action="@{/account}" method="post">
         <div class="form-group">
-            <label for="username">Имя пользователя:</label>
-            <input type="text" class="form-control" id="username"
+            <h2><label for="username">Имя пользователя:</label></h2>
+            <input style="background-color: #2E343E;" type="text" class="form-control input-field" id="username"
                    th:value="${user != null and user.getUsername() != null ? user.getUsername() : ''}"
                    placeholder="Имя пользователя" readonly>
         </div>
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email"
+            <h2><label for="email">Email:</label></h2>
+            <input style="background-color: #2E343E;" type="email" class="form-control input-field" id="email"
                    th:value="${user != null and user.getEmail() != null ? user.getEmail() : ''}"
                    placeholder="Email" readonly>
         </div>
         <div class="form-group">
-            <label for="join_date">Дата регистрации:</label>
-            <input type="text" class="form-control" id="join_date"
+            <h2><label for="join_date">Дата регистрации:</label></h2>
+            <input style="background-color: #2E343E;" type="text" class="form-control input-field" id="join_date"
                    th:value="${user != null and user.getJoinDate() != null ? user.getJoinDate() : ''}"
                    placeholder="Дата регистрации" readonly>
         </div>
     </form>
 
-    <div class="mt-3">
-        <a href="/encryption/result/all" class="btn btn-info">Перейти к результатам</a>
+    <div class="mt-3 but-mid" style="margin-bottom: 5%">
+        <a href="/encryption/result/all" class="button btn btn-info" style="width: 35%">Сохранённые результаты</a>
     </div>
 </div>
 <!-- Подключение Bootstrap JS и зависимостей -->
